@@ -396,17 +396,7 @@ namespace ferram4
                 spoilerLocation = flapLocation;
             }
 
-            Vector3 CoM = Vector3.zero;
-            float mass = 0;
-            for (int i = 0; i < VesselPartList.Count; i++)
-            {
-                Part p = VesselPartList[i];
-
-                CoM += p.transform.position * p.mass;
-                mass += p.mass;
-
-            }
-            CoM /= mass;
+            Vector3 CoM = HighLogic.LoadedSceneIsEditor ? EditorMarker_CoM.CraftCoM : vessel.CurrentCoM;
 
             if (HighLogic.LoadedSceneIsEditor && (isFlap || isSpoiler))
                 SetControlStateEditor(CoM, part.partTransform.up, 0, 0, 0, 0, false);

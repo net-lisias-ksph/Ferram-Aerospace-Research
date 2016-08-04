@@ -1079,7 +1079,8 @@ namespace ferram4
 
             //AC shift due to stall
             if (stall > 0)
-                ACShiftVec -= 0.75 / criticalCl * MAC_actual * Math.Abs(Cl) * stall * ParallelInPlane * CosAoA;
+                ACShiftVec -= 0.45 / criticalCl * MAC_actual * Math.Abs(Cl) * stall * ParallelInPlane * CosAoA * 
+                    Mathf.Clamp((float)((22.0 * FARMathUtil.deg2rad - Math.Acos(cosSweepAngle)) / 22.0), -3.0f, 1.0f);
 
             Cl -= Cl * stall * 0.769;
             Cd += Cd * stall * 3;
