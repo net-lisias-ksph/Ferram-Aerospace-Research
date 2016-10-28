@@ -52,6 +52,9 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI
 {
     class EditorAreaRulingOverlay
     {
+        // TODO 1.2: temporary until we have farshaders.ksp recompiled for Unity 5.4
+        public bool UseCustomShader = false;
+
         //VectorLine _areaLine;
         //VectorLine _derivLine;
         //List<VectorLine> _markingLines;
@@ -101,7 +104,7 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI
 
                 Shader lineShader;
 
-                if (!FARAssets.shaderDict.TryGetValue("FARCrossSectionGraph", out lineShader))
+                if (!UseCustomShader || !FARAssets.shaderDict.TryGetValue("FARCrossSectionGraph", out lineShader) || !lineShader.isSupported)
                 {
                     //TODO: definitely replace this with a proper shader when we can
                     Debug.Log("Could not load cross-section shader; using fallback shader");

@@ -44,6 +44,7 @@ Copyright 2015, Michael Ferrara, aka Ferram4
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using UnityEngine;
 
@@ -96,7 +97,6 @@ namespace FerramAerospaceResearch.FARGUI
         public void LoadColors()
         {
             colors = new List<Color>();
-            Debug.Log("Loading FAR GUI Colors");
             foreach (ConfigNode node in GameDatabase.Instance.GetConfigNodes("FARGUIColors"))
             {
                 if (node.HasValue("ClColor"))
@@ -111,6 +111,7 @@ namespace FerramAerospaceResearch.FARGUI
                 if (node.HasValue("L_DColor"))
                     colors.Add(ReadColor(node.GetValue("L_DColor")));
             }
+            Debug.Log("FAR: GUI Colors loaded: " + String.Join(", ", colors.Select(c => c.ToString()).ToArray()));
         }
 
         public void SaveColors()
