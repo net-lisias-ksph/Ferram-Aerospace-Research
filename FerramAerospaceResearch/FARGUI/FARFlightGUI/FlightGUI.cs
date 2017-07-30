@@ -101,6 +101,13 @@ namespace FerramAerospaceResearch.FARGUI.FARFlightGUI
 
         GUIDropDown<int> settingsWindow;
 
+        private new void Awake()
+        {
+            Telemetry.AddChannel<float>("dragForce_predicted");
+            Telemetry.AddChannel<double>("dragForce_actual");
+            base.Awake();
+        }
+
         protected override void OnAwake()
         {
             if (vesselFlightGUI == null)
@@ -249,8 +256,15 @@ namespace FerramAerospaceResearch.FARGUI.FARFlightGUI
             _stabilityAugmentation.UpdatePhysicsInfo(infoParameters);
             _flightStatusGUI.UpdateInfoParameters(infoParameters);
             _flightDataGUI.UpdateInfoParameters(infoParameters);
+
+            Vector3 aeroForce, aeroTorque;
+
+            FARAPI.CalculateVesselAeroForces(vessel, out aeroForce, out aeroTorque, vessel.srf_velocity, vessel.altitude);
+
+            Telemetry.Send("dragForce_predicted", aeroForce.magnitude);
+            Telemetry.Send("dragForce_actual", infoParameters.dragForce);
         }
-        
+
         void Update()
         {
             FlightGUIDrawer.SetGUIActive(this,(_vessel == FlightGlobals.ActiveVessel && showGUI && showAllGUI));
