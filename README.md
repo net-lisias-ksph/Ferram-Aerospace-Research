@@ -66,13 +66,13 @@ CHANGELOG
 =======================================================
 0.15.9.2V "ferram4"------------------------------------
 
-Compatibility for KSP 1.4.3
-Update to MFI 1.2.5
-Update to MM 3.0.7
+Compatibility for KSP 1.4.3  
+Update to MFI 1.2.5  
+Update to MM 3.0.7  
 
 0.15.9.1V "Liepmann"------------------------------------  
 
-Update for KSP 1.3.1 (though not strictly necessary)
+Update for KSP 1.3.1 (though not strictly necessary)  
 Update to MM 3.0.4 for KSP 1.3.1  
 
 Added ability to override structural stress values for aerodynamic failures on a per-part basis  
