@@ -72,7 +72,7 @@ Update to MM 3.0.7
 
 0.15.9.1V "Liepmann"------------------------------------  
 
-Update for KSP 1.3.1 (though not strictly necessary)  
+Update for KSP 1.3.1 (though not strictly necessary)
 Update to MM 3.0.4 for KSP 1.3.1  
 
 Added ability to override structural stress values for aerodynamic failures on a per-part basis  
