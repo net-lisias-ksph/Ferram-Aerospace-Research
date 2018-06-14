@@ -18,7 +18,7 @@ Aerodynamics model for Kerbal Space Program
    Part.cfg changes powered by sarbian & ialdabaoth's ModuleManager plugin; used with permission  
 	http://forum.kerbalspaceprogram.com/threads/55219
 
-   ModularFLightIntegrator by Sarbian, Starwaster and Ferram4, MIT: http://opensource.org/licenses/MIT
+   ModularFlightIntegrator by Sarbian, Starwaster and Ferram4, MIT: http://opensource.org/licenses/MIT
 	http://forum.kerbalspaceprogram.com/threads/118088
 
    Toolbar integration powered by blizzy78's Toolbar plugin; used with permission  
