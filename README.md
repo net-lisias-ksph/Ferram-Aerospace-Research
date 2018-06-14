@@ -1,4 +1,4 @@
-Ferram Aerospace Research v0.15.9.1 "Liepmann"
+Ferram Aerospace Research v0.15.9.2 "Liepmann"
 =========================
 Aerodynamics model for Kerbal Space Program
 
@@ -64,6 +64,12 @@ Set all the other winglet/control surface values to zero
 
 CHANGELOG
 =======================================================
+0.15.9.2V "ferram4"------------------------------------
+
+Compatibility for KSP 1.4.3
+Update to MFI 1.2.5
+Update to MM 3.0.7
+
 0.15.9.1V "Liepmann"------------------------------------  
 
 Update for KSP 1.3.1 (though not strictly necessary)  
@@ -129,7 +135,7 @@ Update license
 Fix an issue where voxels could be incredibly asymmetric on symmetric crafts  
 
 
-0.15.7V "Küchemann"------------------------------------  
+0.15.7V "KÃ¼chemann"------------------------------------  
 
 Update to ModuleManager 2.6.25  
 Update for KSP 1.1.3 compatibility  
@@ -174,7 +180,7 @@ Fix RealChute / RealChuteLite interaction breaking stock chute behavior, thanks 
 Fix mass-calc error for wing-mass-strength that resulted in all planes gaining unhealthy amounts of weight  
 Attempt to make debug-compatibility actually work, thanks to NathanKell  
 
-0.15.6.1V "von Kármán"------------------------------------
+0.15.6.1V "von KÃ¡rmÃ¡n"------------------------------------
 
 Fix a critical CPU usage bug that resulted in voxelization threads SpinWaiting forever, monopolizing the processor  
 Fix parachutes without RealChute configs not applying forces when FAR + RC are installed, thanks to stupid_chris  
