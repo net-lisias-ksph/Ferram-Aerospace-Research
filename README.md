@@ -1,4 +1,4 @@
-Ferram Aerospace Research v0.15.9.2 "ferram4"
+Ferram Aerospace Research v0.15.9.3 "ferram4.1"
 =========================
 Aerodynamics model for Kerbal Space Program
 
@@ -64,6 +64,10 @@ Set all the other winglet/control surface values to zero
 
 CHANGELOG
 =======================================================
+0.15.9.3V "ferram4.1"------------------------------------
+
+Compatibility for KSP 1.4.5   
+
 0.15.9.2V "ferram4"------------------------------------
 
 Compatibility for KSP 1.4.3  
