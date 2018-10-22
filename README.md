@@ -1,4 +1,4 @@
-Ferram Aerospace Research v0.15.9.3 "ferram4.2"
+Ferram Aerospace Research v0.15.9.4 "ferram4.2"
 =========================
 Aerodynamics model for Kerbal Space Program
 
