@@ -6,6 +6,7 @@ obj
 /GameData/FerramAerospaceResearch/FARForceDataUpdate.cfg
 /GameData/ModularFlightIntegrator/LICENSE.txt
 /GameData/ModularFlightIntegrator/ModularFlightIntegrator.*
+/note.txt
 *.suo
 *.DotSettings
 *.user
