@@ -1,4 +1,4 @@
-Ferram Aerospace Research v0.15.9.4 "ferram4.2"
+Ferram Aerospace Research v0.16.0.0 "Stokes"
 =========================
 Aerodynamics model for Kerbal Space Program
 
@@ -64,6 +64,13 @@ Set all the other winglet/control surface values to zero
 
 CHANGELOG
 =======================================================
+0.15.10V "Stokes"------------------------------------
+
+Compatibility for KSP 1.6.1
+
+Fixed implementation of CalculateVesselAeroForces in API.
+Update to MM 3.1.3
+
 0.15.9.4V "ferram4.2"------------------------------------
 
 Compatibility for KSP 1.5.1   
