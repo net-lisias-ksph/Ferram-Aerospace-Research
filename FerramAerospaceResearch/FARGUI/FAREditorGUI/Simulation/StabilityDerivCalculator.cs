@@ -236,16 +236,15 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI.Simulation
 
             alpha = FARMathUtil.SillySearchMethod(_instantCondition.FunctionIterateForAlpha);
             input.alpha = alpha;
-            nominalOutput = _instantCondition.iterationOutput;
-            //alpha_str = (alpha * Mathf.PI / 180).ToString();
+            _instantCondition.GetClCdCmSteady(input, out nominalOutput, true, true);
 
             input.alpha = (alpha + 2);
 
             _instantCondition.GetClCdCmSteady(input, out pertOutput, true, true);
 
-            stabDerivOutput.stableCl = neededCl;
-            stabDerivOutput.stableCd = nominalOutput.Cd;
-            stabDerivOutput.stableAoA = alpha;
+            stabDerivOutput.stableCl = nominalOutput.Cl; // Rodhern: While technically 'neededCl' is the more accurate
+            stabDerivOutput.stableCd = nominalOutput.Cd;          // value, maybe the calculated approximation
+            stabDerivOutput.stableAoA = alpha;                    // (nominalOutput.Cl) is the more interesting one.
             stabDerivOutput.stableAoAState = "";
             if (Math.Abs((nominalOutput.Cl - neededCl) / neededCl) > 0.1)
                 stabDerivOutput.stableAoAState = ((nominalOutput.Cl > neededCl) ? "<" : ">");
