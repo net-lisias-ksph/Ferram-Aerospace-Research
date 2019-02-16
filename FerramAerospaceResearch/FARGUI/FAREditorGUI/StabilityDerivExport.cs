@@ -361,9 +361,10 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI
                 env.AddScalar("dynpres", output.exportvals.sitdynpres);
                 env.AddScalar("effg", output.exportvals.siteffg);
                 
-                deriv.AddScalar("Cl", output.outputvals.stableCl);
-                deriv.AddScalar("Cd", output.outputvals.stableCd);
-                deriv.AddScalar("AoA", output.outputvals.stableAoA);
+                deriv.AddScalar("Cl", output.outputvals.stableCondition.stableCl);
+                deriv.AddScalar("Cd", output.outputvals.stableCondition.stableCd);
+                deriv.AddScalar("AoA", output.outputvals.stableCondition.stableAoA);
+                deriv.AddScalar("elevators", output.outputvals.stableCondition.stablePitchValue);
                 deriv.AddScalar("Zw", output.outputvals.stabDerivs[3]);
                 deriv.AddScalar("Xw", output.outputvals.stabDerivs[4]);
                 deriv.AddScalar("Mw", output.outputvals.stabDerivs[5]);

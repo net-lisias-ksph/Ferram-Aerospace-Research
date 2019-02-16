@@ -123,7 +123,7 @@ namespace FerramAerospaceResearch
             return BitConverter.Int64BitsToDouble(((long)tmp2) << 32);
         }
 
-        public static double BrentsMethod(Func<double, double> function, double a, double b, double epsilon = 0.001, int maxIter = int.MaxValue)
+        public static double BrentsMethod(Func<double, double> function, double a, double b, double epsilon, int maxIter)
         {
             double delta = epsilon * 100;
             double fa, fb;
@@ -260,7 +260,7 @@ namespace FerramAerospaceResearch
         private const double tol_brent = 1E-3;
         private const int iterlim = 500;
 
-        public static double SillySearchMethod(Func<double, double> function)
+        public static double SegmentSearchMethod(Func<double, double> function)
         {
             double x0 = 0d;
             double f0 = function(x0);

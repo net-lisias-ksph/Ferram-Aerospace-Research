@@ -50,20 +50,41 @@ using UnityEngine;
 
 namespace FerramAerospaceResearch.FARGUI.FAREditorGUI.Simulation
 {
+    class InstantConditionSimIterationResult
+    {
+        public double stableCl;
+        public double stableCd;
+        public double stablePitchValue;
+        public double stableAoA;
+        public string stableAoAState;
+
+        public InstantConditionSimIterationResult(double Cl, double Cd, double pitch, double AoA, string AoAState)
+        {
+            stableCl = Cl;
+            stableCd = Cd;
+            stablePitchValue = pitch;
+            stableAoA = AoA;
+            stableAoAState = AoAState;
+        }
+    }
+
+
     class StabilityDerivOutput
     {
-        public double[] stabDerivs = new double[27];
+        public CelestialBody body;
+        public double altitude;
+        public double nominalVelocity;
+
         public double b;
         public double MAC;
         public double area;
 
-        public double stableCl;
-        public double stableCd;
-        public double stableAoA;
-        public string stableAoAState;
+        public InstantConditionSimIterationResult stableCondition;
+        public double[] stabDerivs = new double[27];
 
-        public double nominalVelocity;
-        public CelestialBody body;
-        public double altitude;
+        public StabilityDerivOutput()
+        {
+            stableCondition = new InstantConditionSimIterationResult(0, 0, 0, 0, "");
+        }
     }
 }

@@ -115,7 +115,7 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI.Simulation
                 }
 
             }
-            A.Add(_instantCondition.CalculateAccelerationDueToGravity(vehicleData.body, vehicleData.altitude) * Math.Cos(vehicleData.stableAoA * Math.PI / 180) / vehicleData.nominalVelocity, 3, 0);
+            A.Add(_instantCondition.CalculateAccelerationDueToGravity(vehicleData.body, vehicleData.altitude) * Math.Cos(vehicleData.stableCondition.stableAoA * Math.PI / 180) / vehicleData.nominalVelocity, 3, 0);
             A.Add(1, 1, 3);
 
 

@@ -44,7 +44,6 @@ Copyright 2017, Michael Ferrara, aka Ferram4
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using ferram4;
 using FerramAerospaceResearch.FARAeroComponents;
@@ -109,9 +108,8 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI.Simulation
                 double partMass = p.mass;
                 if (p.Resources.Count > 0)
                     partMass += p.GetResourceMass();
+                //partMass += p.GetModuleMass(p.mass); // If you want to use GetModuleMass, you need to start from p.partInfo.mass, not p.mass
 
-                //partMass += p.GetModuleMass(p.mass);
-                // If you want to use GetModuleMass, you need to start from p.partInfo.mass, not p.mass
                 CoM += partMass * (Vector3d)p.transform.TransformPoint(p.CoMOffset);
                 mass += partMass;
             }
@@ -187,20 +185,11 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI.Simulation
                 output.Cn += Vector3d.Dot(moment, liftVector);
                 output.C_roll += Vector3d.Dot(moment, velocity);
 
-                //w.ComputeClCdEditor(vel.normalized, input.machNumber);
-
-                /*double tmpCl = w.GetCl() * w.S;
-                output.Cl += tmpCl * -Vector3d.Dot(w.GetLiftDirection(), liftVector);
-                output.Cy += tmpCl * -Vector3d.Dot(w.GetLiftDirection(), sideways);
-                double tmpCd = w.GetCd() * w.S;
-                output.Cd += tmpCd;
-                output.Cm += tmpCl * Vector3d.Dot((relPos), velocity) * -Vector3d.Dot(w.GetLiftDirection(), liftVector) + tmpCd * -Vector3d.Dot((relPos), liftVector);
-                output.Cn += tmpCd * Vector3d.Dot((relPos), sideways) + tmpCl * Vector3d.Dot((relPos), velocity) * -Vector3d.Dot(w.GetLiftDirection(), sideways);
-                output.C_roll += tmpCl * Vector3d.Dot((relPos), sideways) * -Vector3d.Dot(w.GetLiftDirection(), liftVector);*/
                 area += w.S;
                 MAC += w.GetMAC() * w.S;
                 b_2 += w.Getb_2() * w.S;
             }
+
             FARCenterQuery center = new FARCenterQuery();
             for (int i = 0; i < _currentAeroSections.Count; i++)
             {
@@ -218,24 +207,6 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI.Simulation
             output.Cm += Vector3d.Dot(centerMoment, sideways);
             output.Cn += Vector3d.Dot(centerMoment, liftVector);
             output.C_roll += Vector3d.Dot(centerMoment, velocity);
-            
-
-            /*for (int i = 0; i < FARAeroUtil.CurEditorParts.Count; i++)
-            {
-                Part p = FARAeroUtil.CurEditorParts[i];
-                if (FARAeroUtil.IsNonphysical(p))
-                    continue;
-
-                Vector3 part_pos = p.transform.TransformPoint(p.CoMOffset) - CoM;
-                double partMass = p.mass;
-                if (p.Resources.Count > 0)
-                    partMass += p.GetResourceMass();
-
-                double stock_drag = partMass * p.maximum_drag * FlightGlobals.DragMultiplier * 1000;
-                output.Cd += stock_drag;
-                output.Cm += stock_drag * -Vector3d.Dot(part_pos, liftVector);
-                output.Cn += stock_drag * Vector3d.Dot(part_pos, sideways);
-            }*/
 
             if (area == 0)
             {
@@ -292,6 +263,5 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI.Simulation
             GetClCdCmSteady(iterationInput, out iterationOutput, true, true);
             return iterationOutput.Cl - neededCl;
         }
-
     }
 }

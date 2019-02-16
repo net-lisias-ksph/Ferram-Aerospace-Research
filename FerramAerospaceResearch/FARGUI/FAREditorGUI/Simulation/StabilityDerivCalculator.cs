@@ -65,7 +65,7 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI.Simulation
             if (body.GetPressure(alt) > 0)
             {
                 StabilityDerivExportOutput result = CalculateStabilityDerivs(body, alt, machNumber, flapSetting, spoilers, 0, 0, 0);
-                if (result.outputvals.stableAoAState == "")
+                if (result.outputvals.stableCondition.stableAoAState == "")
                     return result;
                 else
                     return null;
@@ -104,8 +104,7 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI.Simulation
             double Ixz = 0;
 
             InstantConditionSimInput input = new InstantConditionSimInput(alpha, beta, phi, 0, 0, 0, machNumber, 0, flapSetting, spoilers);
-            InstantConditionSimOutput nominalOutput;
-            InstantConditionSimOutput pertOutput = new InstantConditionSimOutput();
+            InstantConditionSimOutput nominalOutput, pertOutput;
 
             _instantCondition.GetClCdCmSteady(input, out nominalOutput, true);
 
@@ -119,9 +118,8 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI.Simulation
                 double partMass = p.mass;
                 if (p.Resources.Count > 0)
                     partMass += p.GetResourceMass();
+                //partMass += p.GetModuleMass(p.mass); // If you want to use GetModuleMass, you need to start from p.partInfo.mass, not p.mass
 
-                //partMass += p.GetModuleMass(p.mass);
-                // If you want to use GetModuleMass, you need to start from p.partInfo.mass, not p.mass
                 CoM += partMass * (Vector3d)p.transform.TransformPoint(p.CoMOffset);
                 mass += partMass;
                 FARWingAerodynamicModel w = p.GetComponent<FARWingAerodynamicModel>();
@@ -173,9 +171,7 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI.Simulation
                 double partMass = p.mass;
                 if (p.Resources.Count > 0)
                     partMass += p.GetResourceMass();
-
-                //partMass += p.GetModuleMass(p.mass);
-                // If you want to use GetModuleMass, you need to start from p.partInfo.mass, not p.mass
+                //partMass += p.GetModuleMass(p.mass); // If you want to use GetModuleMass, you need to start from p.partInfo.mass, not p.mass
 
                 Ix += (y2 + z2) * partMass;
                 Iy += (x2 + z2) * partMass;
@@ -202,7 +198,6 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI.Simulation
                     2 * (prncInertRot.y * prncInertRot.z - prncInertRot.x * prncInertRot.w),
                     -prncInertRot.x * prncInertRot.x - prncInertRot.y * prncInertRot.y + prncInertRot.z * prncInertRot.z + prncInertRot.w * prncInertRot.w);
 
-
                 //And converting the principal moments of inertia into the coordinate system used by the system
                 Ix += principalInertia.x * Row1.x * Row1.x + principalInertia.y * Row1.y * Row1.y + principalInertia.z * Row1.z * Row1.z;
                 Iy += principalInertia.x * Row2.x * Row2.x + principalInertia.y * Row2.y * Row2.y + principalInertia.z * Row2.z * Row2.z;
@@ -224,17 +219,15 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI.Simulation
             stabDerivOutput.stabDerivs[25] = Iyz;
             stabDerivOutput.stabDerivs[26] = Ixz;
 
-
             double effectiveG = _instantCondition.CalculateAccelerationDueToGravity(body, alt);     //This is the effect of gravity
             effectiveG -= u0 * u0 / (alt + body.Radius);                          //This is the effective reduction of gravity due to high velocity
             double neededCl = mass * effectiveG / (q * area);
-
 
             _instantCondition.GetClCdCmSteady(input, out pertOutput, true, true);
             //Longitudinal Mess
             _instantCondition.SetState(machNumber, neededCl, CoM, 0, input.flaps, input.spoilers);
 
-            alpha = FARMathUtil.SillySearchMethod(_instantCondition.FunctionIterateForAlpha);
+            alpha = FARMathUtil.SegmentSearchMethod(_instantCondition.FunctionIterateForAlpha);
             input.alpha = alpha;
             _instantCondition.GetClCdCmSteady(input, out nominalOutput, true, true);
 
@@ -242,12 +235,12 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI.Simulation
 
             _instantCondition.GetClCdCmSteady(input, out pertOutput, true, true);
 
-            stabDerivOutput.stableCl = nominalOutput.Cl; // Rodhern: While technically 'neededCl' is the more accurate
-            stabDerivOutput.stableCd = nominalOutput.Cd;          // value, maybe the calculated approximation
-            stabDerivOutput.stableAoA = alpha;                    // (nominalOutput.Cl) is the more interesting one.
-            stabDerivOutput.stableAoAState = "";
+            stabDerivOutput.stableCondition.stableCl = nominalOutput.Cl; // Rodhern: While technically 'neededCl' is the more accurate
+            stabDerivOutput.stableCondition.stableCd = nominalOutput.Cd;          // value, maybe the calculated approximation
+            stabDerivOutput.stableCondition.stableAoA = alpha;                    // (nominalOutput.Cl) is the more interesting one.
+            stabDerivOutput.stableCondition.stableAoAState = "";
             if (Math.Abs((nominalOutput.Cl - neededCl) / neededCl) > 0.1)
-                stabDerivOutput.stableAoAState = ((nominalOutput.Cl > neededCl) ? "<" : ">");
+                stabDerivOutput.stableCondition.stableAoAState = ((nominalOutput.Cl > neededCl) ? "<" : ">");
 
             Debug.Log("Cl needed: " + neededCl + ", AoA: " + alpha + ", Cl: " + nominalOutput.Cl + ", Cd: " + nominalOutput.Cd);
 
@@ -293,7 +286,7 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI.Simulation
             input.alphaDot = -0.05;
 
             _instantCondition.GetClCdCmSteady(input, out pertOutput, true, false);
-           
+
             pertOutput.Cl = (pertOutput.Cl - nominalOutput.Cl) / 0.05;                   //pitch rate derivs
             pertOutput.Cd = (pertOutput.Cd - nominalOutput.Cd) / 0.05;
             pertOutput.Cm = (pertOutput.Cm - nominalOutput.Cm) / 0.05;
@@ -310,7 +303,7 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI.Simulation
             input.pitchValue = 0.1;
 
             _instantCondition.GetClCdCmSteady(input, out pertOutput, true, false);
-            
+
             pertOutput.Cl = (pertOutput.Cl - nominalOutput.Cl) / 0.1;                   //elevator derivs
             pertOutput.Cd = (pertOutput.Cd - nominalOutput.Cd) / 0.1;
             pertOutput.Cm = (pertOutput.Cm - nominalOutput.Cm) / 0.1;
@@ -348,7 +341,7 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI.Simulation
             input.phiDot = -0.05;
 
             _instantCondition.GetClCdCmSteady(input, out pertOutput, true, false);
-           
+
             pertOutput.Cy = (pertOutput.Cy - nominalOutput.Cy) / 0.05;                   //roll rate derivs
             pertOutput.Cn = (pertOutput.Cn - nominalOutput.Cn) / 0.05;
             pertOutput.C_roll = (pertOutput.C_roll - nominalOutput.C_roll) / 0.05;
@@ -360,7 +353,6 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI.Simulation
             stabDerivOutput.stabDerivs[18] = pertOutput.Cy;     //Yp
             stabDerivOutput.stabDerivs[20] = pertOutput.Cn;     //Np
             stabDerivOutput.stabDerivs[19] = pertOutput.C_roll; //Lp
-
 
             input.phiDot = 0;
 

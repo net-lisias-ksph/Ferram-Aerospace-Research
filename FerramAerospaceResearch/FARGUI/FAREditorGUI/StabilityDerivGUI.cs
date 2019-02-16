@@ -158,10 +158,10 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI
             GUILayout.BeginVertical(GUILayout.Width(140));
             GUILayout.Label(new GUIContent(Localizer.Format("FAREditorStabDerivu0") + stabDerivOutput.nominalVelocity.ToString("G6") + " " + Localizer.Format("FARUnitMPerSec"), Localizer.Format("FAREditorStabDerivu0Exp")));
             GUILayout.BeginHorizontal();
-            GUILayout.Label(new GUIContent(Localizer.Format("FARAbbrevCl") + ": " + stabDerivOutput.stableCl.ToString("G3"), Localizer.Format("FAREditorStabDerivClExp")));
-            GUILayout.Label(new GUIContent(Localizer.Format("FARAbbrevCd") + ": " + stabDerivOutput.stableCd.ToString("G3"), Localizer.Format("FAREditorStabDerivCdExp")));
+            GUILayout.Label(new GUIContent(Localizer.Format("FARAbbrevCl") + ": " + stabDerivOutput.stableCondition.stableCl.ToString("G3"), Localizer.Format("FAREditorStabDerivClExp")));
+            GUILayout.Label(new GUIContent(Localizer.Format("FARAbbrevCd") + ": " + stabDerivOutput.stableCondition.stableCd.ToString("G3"), Localizer.Format("FAREditorStabDerivCdExp")));
             GUILayout.EndHorizontal();
-            GUILayout.Label(new GUIContent(Localizer.Format("FARAbbrevAoA") + ": " + stabDerivOutput.stableAoAState + stabDerivOutput.stableAoA.ToString("G6") + " " + Localizer.Format("FARUnitDeg"), Localizer.Format("FAREditorStabDerivAoAExp")));
+            GUILayout.Label(new GUIContent(Localizer.Format("FARAbbrevAoA") + ": " + stabDerivOutput.stableCondition.stableAoAState + stabDerivOutput.stableCondition.stableAoA.ToString("G6") + " " + Localizer.Format("FARUnitDeg"), Localizer.Format("FAREditorStabDerivAoAExp")));
             GUILayout.EndVertical();
             GUILayout.EndHorizontal();
 
@@ -267,7 +267,7 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI
             {
                 stabDerivOutput = stabDerivResult.outputvals;
                 simManager.vehicleData = stabDerivResult.outputvals;
-                SetAngleVectors(stabDerivResult.outputvals.stableAoA);
+                SetAngleVectors(stabDerivResult.outputvals.stableCondition.stableAoA);
 
                 if (exportflag == CalcAndExportEnum.CalculateAndExport && !StabilityDerivativeExportFile.Export(stabDerivResult))
                     PopupDialog.SpawnPopupDialog(new Vector2(0, 0), new Vector2(0, 0), "FARStabDerivSaveError", Localizer.Format("FAREditorStabDerivSaveError"), Localizer.Format("FAREditorStabDerivSaveErrorExp"), Localizer.Format("FARGUIOKButton"), true, HighLogic.UISkin);
