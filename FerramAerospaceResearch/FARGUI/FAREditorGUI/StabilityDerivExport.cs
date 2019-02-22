@@ -363,6 +363,7 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI
                 
                 deriv.AddScalar("Cl", output.outputvals.stableCondition.stableCl);
                 deriv.AddScalar("Cd", output.outputvals.stableCondition.stableCd);
+                deriv.AddScalar("Cm", output.outputvals.stableCondition.stableCm);
                 deriv.AddScalar("AoA", output.outputvals.stableCondition.stableAoA);
                 deriv.AddScalar("elevators", output.outputvals.stableCondition.stablePitchValue);
                 deriv.AddScalar("Zw", output.outputvals.stabDerivs[3]);

@@ -249,31 +249,117 @@ namespace FerramAerospaceResearch
             return s;
         }
 
-        private const double rightedge = 30d;
-        private const double leftedge = -rightedge;
-        private const double xstepinitial = 5d;
-        private const double xstepsize = 10d;
-        private const double minpart = 1d / 8d;
-        private const double maxpart = 7d / 8d;
-        private const double tol_triangle = 1E-3;
-        private const double tol_linear = 3E-4;
-        private const double tol_brent = 1E-3;
-        private const int iterlim = 500;
+        #region Segment Search Method
+        public class IterationTolerances
+        {
+            /// <summary>
+            /// By convention the argument search extent is named 'rightedge'.
+            /// If the function is negative at zero the segment search method
+            /// will check the interval ]0; rightedge].
+            /// If the function is positive at zero the segment search method
+            /// will check the interval [-rightedge; 0[.
+            /// If the search must revert to Brent's method the search interval
+            /// is [leftedge; rightedge].
+            /// </summary>
+            public double rightedge;
 
-        public static double SegmentSearchMethod(Func<double, double> function)
+            /// <summary>
+            /// The left edge of the argument interval used in case the search
+            /// must revert to Brent's method.
+            /// </summary>
+            public double leftedge;
+
+            /// <summary>
+            /// The size of the first segment searched, e.g. [0deg; 5deg].
+            /// </summary>
+            public double xstepinitial;
+
+            /// <summary>
+            /// The size of subsequent segments searched.
+            /// </summary>
+            public double xstepsize;
+
+            /// <summary>
+            /// Parameters <paramref name="minpart"/> and
+            /// <paramref name="maxpart"/> are used in the linear interpolation
+            /// loop to avoid 'getting stuck'.
+            /// </summary>
+            public double minpart;
+
+            /// <summary>
+            /// Parameters <paramref name="minpart"/> and
+            /// <paramref name="maxpart"/> are used in the linear interpolation
+            /// loop to avoid 'getting stuck'.
+            /// </summary>
+            public double maxpart;
+
+            /// <summary>
+            /// When to give up the search for a (positive) maximum.
+            /// </summary>
+            public double tol_triangle;
+
+            /// <summary>
+            /// The argument precision used in linear interpolation.
+            /// </summary>
+            public double tol_linear;
+
+            /// <summary>
+            /// The iteration tolerance used in case the search must revert
+            /// to Brent's method.
+            /// </summary>
+            public double tol_brent;
+
+            /// <summary>
+            /// Determines what to do if the segment search method fails.
+            /// If <paramref name="allowbrent"/> is true the search reverts to
+            /// FAR's Brent's method, meaning the search will start over using
+            /// Brent's method, whereas if <paramref name="allowbrent"/> is
+            /// false the search is simply abandoned and will return NaN.
+            /// When <paramref name="allowbrent"/> is false, the other Brent
+            /// parameters, i.e. 'leftedge', 'iterlim' and 'tol_brent', are not
+            /// used.
+            /// </summary>
+            public bool allowbrent;
+
+            /// <summary>
+            /// The iteration limit used in case the search must revert to
+            /// Brent's method.
+            /// </summary>
+            public int iterlim;
+
+            /// <summary>
+            /// The default iteration tolerances (from Rodhern's update 2).
+            /// </summary>
+            public IterationTolerances()
+            {
+                this.rightedge = 30d;
+                this.leftedge = -rightedge;
+                this.xstepinitial = 5d;
+                this.xstepsize = 10d;
+                this.minpart = 1d / 8d;
+                this.maxpart = 7d / 8d;
+                this.tol_triangle = 1E-3;
+                this.tol_linear = 3E-4;
+                this.tol_brent = 1E-3;
+                this.iterlim = 500;
+                this.allowbrent = true;
+            }
+        }
+
+        public static double SegmentSearchMethod(Func<double, double> function, IterationTolerances tols)
         {
             double x0 = 0d;
             double f0 = function(x0);
-            MirroredFunction mfobj = new MirroredFunction(function, f0 > 0d);
+            MirroredFunction mfobj = new MirroredFunction(function, f0 > 0d, tols);
             if (mfobj.IsMirrored) f0 = -f0;
             Func<double, double> f = mfobj.Delegate;
-            double x1 = xstepinitial;
+            double x1 = tols.xstepinitial;
             double f1 = f(x1);
             if (f1 < f0) return mfobj.BrentSolve("Negative initial gradient.");
 
         LblSkipRight:
             if (f1 > 0) return mfobj.LinearSolution(x0, f0, x1, f1);
-            double x2 = Clamp<double>(x1 + xstepsize, 0d, rightedge);
+            double x2 = Clamp<double>(x1 + tols.xstepsize, 0d, tols.rightedge);
             if (x2 == x1) return mfobj.BrentSolve("Reached far right edge.");
             double f2 = f(x2);
             if (f2 > f1)
@@ -285,7 +371,7 @@ namespace FerramAerospaceResearch
 
         LblTriangle:
             if (f1 > 0) return mfobj.LinearSolution(x0, f0, x1, f1);
-            if (x2 - x0 < tol_triangle) return mfobj.BrentSolve("Local maximum is negative (search point x= " + x0 + ").");
+            if (x2 - x0 < tols.tol_triangle) return mfobj.BrentSolve("Local maximum is negative (search point x= " + x0 + ").");
             double x01 = (x0 + x1) / 2d;
             double x12 = (x1 + x2) / 2d;
             double f01 = f(x01);
@@ -314,11 +400,13 @@ namespace FerramAerospaceResearch
         {
             private Func<double, double> F;
             private bool mirror;
+            private IterationTolerances tols; // reference to iteration tolerances
 
-            public MirroredFunction(Func<double, double> original, bool mirrored)
+            public MirroredFunction(Func<double, double> original, bool mirrored, IterationTolerances tolerances)
             {
                 F = original;
                 mirror = mirrored;
+                tols = tolerances;
             }
 
             public Func<double, double> Delegate
@@ -351,8 +439,8 @@ namespace FerramAerospaceResearch
 
             LblLoop:
                 double x = x0 + (x0 - x1) * f0 / (f1 - f0);
-                if (x1 - x0 < tol_linear) return x;
-                x = Clamp<double>(x, maxpart * x0 + minpart * x1, minpart * x0 + maxpart * x1);
+                if (x1 - x0 < tols.tol_linear) return x;
+                x = Clamp<double>(x, tols.maxpart * x0 + tols.minpart * x1, tols.minpart * x0 + tols.maxpart * x1);
                 double fx = F(x);
                 if (fx < 0d)
                 {
@@ -370,9 +458,18 @@ namespace FerramAerospaceResearch
 
             public double BrentSolve(string dbgmsg)
             {
-                Debug.Log("[Rodhern] FAR: MirroredFunction (mirrored= " + mirror + ") reverting to BrentsMethod: " + dbgmsg);
-                return FARMathUtil.BrentsMethod(this.F, leftedge, rightedge, tol_brent, iterlim);
+                if (tols.allowbrent)
+                {
+                    Debug.Log("[Rodhern] FAR: MirroredFunction (mirrored= " + mirror + ") reverting to BrentsMethod: " + dbgmsg);
+                    return FARMathUtil.BrentsMethod(this.F, tols.leftedge, tols.rightedge, tols.tol_brent, tols.iterlim);
+                }
+                else
+                {
+                    Debug.Log("[Rodhern] FAR: MirroredFunction (mirrored= " + mirror + ") abandoned search: " + dbgmsg);
+                    return Double.NaN;
+                }
             }
         }
+        #endregion
     }
 }

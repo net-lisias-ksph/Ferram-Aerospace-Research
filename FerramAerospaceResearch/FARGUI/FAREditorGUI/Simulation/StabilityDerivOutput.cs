@@ -54,14 +54,16 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI.Simulation
     {
         public double stableCl;
         public double stableCd;
+        public double stableCm;
         public double stablePitchValue;
         public double stableAoA;
         public string stableAoAState;
 
-        public InstantConditionSimIterationResult(double Cl, double Cd, double pitch, double AoA, string AoAState)
+        public InstantConditionSimIterationResult(double Cl, double Cd, double Cm, double pitch, double AoA, string AoAState)
         {
             stableCl = Cl;
             stableCd = Cd;
+            stableCm = Cm;
             stablePitchValue = pitch;
             stableAoA = AoA;
             stableAoAState = AoAState;
@@ -84,7 +86,7 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI.Simulation
 
         public StabilityDerivOutput()
         {
-            stableCondition = new InstantConditionSimIterationResult(0, 0, 0, 0, "");
+            stableCondition = new InstantConditionSimIterationResult(0, 0, 0, 0, 0, "");
         }
     }
 }

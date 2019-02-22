@@ -60,21 +60,13 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI.Simulation
 
         public StabilityDerivExportOutput CalculateStabilityDerivs(CelestialBody body, double alt, double machNumber, int flapSetting, bool spoilers)
         {
-            // Rodhern: Only return a result if one is found.
-
             if (body.GetPressure(alt) > 0)
-            {
-                StabilityDerivExportOutput result = CalculateStabilityDerivs(body, alt, machNumber, flapSetting, spoilers, 0, 0, 0);
-                if (result.outputvals.stableCondition.stableAoAState == "")
-                    return result;
-                else
-                    return null;
-            }
+                return CalculateStabilityDerivs(body, alt, machNumber, flapSetting, spoilers, 0, 0);
             else
                 return null;
         }
 
-        public StabilityDerivExportOutput CalculateStabilityDerivs(CelestialBody body, double alt, double machNumber, int flapSetting, bool spoilers, double alpha, double beta, double phi)
+        public StabilityDerivExportOutput CalculateStabilityDerivs(CelestialBody body, double alt, double machNumber, int flapSetting, bool spoilers, double beta, double phi)
         {
             double pressure = body.GetPressure(alt);
             double temperature = body.GetTemperature(alt);
@@ -103,7 +95,7 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI.Simulation
             double Iyz = 0;
             double Ixz = 0;
 
-            InstantConditionSimInput input = new InstantConditionSimInput(alpha, beta, phi, 0, 0, 0, machNumber, 0, flapSetting, spoilers);
+            InstantConditionSimInput input = new InstantConditionSimInput(0, beta, phi, 0, 0, 0, machNumber, 0, flapSetting, spoilers);
             InstantConditionSimOutput nominalOutput, pertOutput;
 
             _instantCondition.GetClCdCmSteady(input, out nominalOutput, true);
@@ -112,9 +104,9 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI.Simulation
             for (int i = 0; i < partsList.Count; i++)
             {
                 Part p = partsList[i];
-
                 if (FARAeroUtil.IsNonphysical(p))
                     continue;
+
                 double partMass = p.mass;
                 if (p.Resources.Count > 0)
                     partMass += p.GetResourceMass();
@@ -155,9 +147,9 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI.Simulation
             for (int i = 0; i < partsList.Count; i++)
             {
                 Part p = partsList[i];
-
                 if (p == null || FARAeroUtil.IsNonphysical(p))
                     continue;
+
                 //This section handles the parallel axis theorem
                 Vector3 relPos = p.transform.TransformPoint(p.CoMOffset) - CoM;
                 double x2, y2, z2, x, y, z;
@@ -227,7 +219,7 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI.Simulation
             //Longitudinal Mess
             _instantCondition.SetState(machNumber, neededCl, CoM, 0, input.flaps, input.spoilers);
 
-            alpha = FARMathUtil.SegmentSearchMethod(_instantCondition.FunctionIterateForAlpha);
+            double alpha = FARMathUtil.SegmentSearchMethod(_instantCondition.FunctionIterateForAlpha, new FARMathUtil.IterationTolerances());
             input.alpha = alpha;
             _instantCondition.GetClCdCmSteady(input, out nominalOutput, true, true);
 
@@ -237,12 +229,13 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI.Simulation
 
             stabDerivOutput.stableCondition.stableCl = nominalOutput.Cl; // Rodhern: While technically 'neededCl' is the more accurate
             stabDerivOutput.stableCondition.stableCd = nominalOutput.Cd;          // value, maybe the calculated approximation
-            stabDerivOutput.stableCondition.stableAoA = alpha;                    // (nominalOutput.Cl) is the more interesting one.
+            stabDerivOutput.stableCondition.stableCm = nominalOutput.Cm;          // (nominalOutput.Cl) is the more interesting one.
+            stabDerivOutput.stableCondition.stableAoA = alpha;
             stabDerivOutput.stableCondition.stableAoAState = "";
             if (Math.Abs((nominalOutput.Cl - neededCl) / neededCl) > 0.1)
                 stabDerivOutput.stableCondition.stableAoAState = ((nominalOutput.Cl > neededCl) ? "<" : ">");
 
-            Debug.Log("Cl needed: " + neededCl + ", AoA: " + alpha + ", Cl: " + nominalOutput.Cl + ", Cd: " + nominalOutput.Cd);
+            Debug.Log("[FAR] Cl needed: " + neededCl + ", AoA: " + alpha + ", Cl: " + nominalOutput.Cl + ", Cd: " + nominalOutput.Cd + ", Cm: " + nominalOutput.Cm);
 
             pertOutput.Cl = (pertOutput.Cl - nominalOutput.Cl) / (2 * FARMathUtil.deg2rad);                   //vert vel derivs
             pertOutput.Cd = (pertOutput.Cd - nominalOutput.Cd) / (2 * FARMathUtil.deg2rad);

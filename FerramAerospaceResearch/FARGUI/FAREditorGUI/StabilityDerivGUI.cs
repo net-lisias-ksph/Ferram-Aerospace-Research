@@ -229,6 +229,13 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI
 
         private enum CalcAndExportEnum { CalculateOnly, CalculateAndExport, LoopExport };
 
+        private bool AoAOk(StabilityDerivExportOutput output, CalcAndExportEnum exportflag)
+        {
+            if (output == null) return false;
+            else if (output.outputvals.stableCondition.stableAoAState == "") return true;
+            else return (exportflag == CalcAndExportEnum.CalculateOnly);
+        }
+
         private void StabDerivCalcButtonAction(CalcAndExportEnum exportflag)
         {
             CelestialBody body = _bodySettingDropdown.ActiveSelection;
@@ -247,7 +254,7 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI
                 foreach (Vector2 altmach in StabilityDerivativeExportFile.LoadConfigList())
                 {
                     StabilityDerivExportOutput output = simManager.StabDerivCalculator.CalculateStabilityDerivs(body, (double)altmach.x, (double)altmach.y, flapsettingInt, spoilersDeployedBool);
-                    if (output != null && StabilityDerivativeExportFile.Export(output, filecache))
+                    if (AoAOk(output, exportflag) && StabilityDerivativeExportFile.Export(output, filecache))
                         n++;
                 }
                 if (n > 0)
@@ -261,9 +268,7 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI
             }
 
             StabilityDerivExportOutput stabDerivResult = simManager.StabDerivCalculator.CalculateStabilityDerivs(body, altitudeDouble, machDouble, flapsettingInt, spoilersDeployedBool);
-            if (stabDerivResult == null)
-                PopupDialog.SpawnPopupDialog(new Vector2(0, 0), new Vector2(0, 0), "FARStabDerivError", Localizer.Format("FAREditorStabDerivError"), Localizer.Format("FAREditorStabDerivErrorExp"), Localizer.Format("FARGUIOKButton"), true, HighLogic.UISkin);
-            else
+            if (AoAOk(stabDerivResult, exportflag))
             {
                 stabDerivOutput = stabDerivResult.outputvals;
                 simManager.vehicleData = stabDerivResult.outputvals;
@@ -272,6 +277,8 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI
                 if (exportflag == CalcAndExportEnum.CalculateAndExport && !StabilityDerivativeExportFile.Export(stabDerivResult))
                     PopupDialog.SpawnPopupDialog(new Vector2(0, 0), new Vector2(0, 0), "FARStabDerivSaveError", Localizer.Format("FAREditorStabDerivSaveError"), Localizer.Format("FAREditorStabDerivSaveErrorExp"), Localizer.Format("FARGUIOKButton"), true, HighLogic.UISkin);
             }
+            else
+                PopupDialog.SpawnPopupDialog(new Vector2(0, 0), new Vector2(0, 0), "FARStabDerivError", Localizer.Format("FAREditorStabDerivError"), Localizer.Format("FAREditorStabDerivErrorExp"), Localizer.Format("FARGUIOKButton"), true, HighLogic.UISkin);
         }
 
         private void StabilityLabel(String text1, double val, String text2, String tooltip, int width, int sign)
