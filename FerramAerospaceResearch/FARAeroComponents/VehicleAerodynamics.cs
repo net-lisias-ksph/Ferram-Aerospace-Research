@@ -425,7 +425,8 @@ namespace FerramAerospaceResearch.FARAeroComponents
                 try
                 {
                     //Actually voxelize it
-                    _voxel = VehicleVoxel.CreateNewVoxel(_vehiclePartList, _currentGeoModules, _voxelCount);
+                    bool multithread = HighLogic.LoadedSceneIsFlight; // Rodhern: If not in flight let us settle for single threaded calculations; at least for the time being.
+                    _voxel = VehicleVoxel.CreateNewVoxel(_vehiclePartList, _currentGeoModules, _voxelCount, multithread, true);
                     if (_vehicleCrossSection.Length < _voxel.MaxArrayLength)
                         _vehicleCrossSection = _voxel.EmptyCrossSectionArray;
 
@@ -1126,7 +1127,7 @@ namespace FerramAerospaceResearch.FARAeroComponents
 
             double criticalMachNumber = CalculateCriticalMachNumber(finenessRatio);
 
-            _criticalMach = criticalMachNumber * CriticalMachFactorForUnsmoothCrossSection(_vehicleCrossSection, finenessRatio, _sectionThickness);
+            _criticalMach = criticalMachNumber * CriticalMachFactorForUnsmoothCrossSection(_vehicleCrossSection, front, back, finenessRatio, _sectionThickness);
 
             float lowFinenessRatioFactor = 1f;
             lowFinenessRatioFactor += 1f/(1 + 0.5f * (float)finenessRatio);
@@ -1279,7 +1280,6 @@ namespace FerramAerospaceResearch.FARAeroComponents
                 {
                     xForcePressureAoA0.SetPoint(0, new Vector3d(_criticalMach, (0.325f * hypersonicDragForward * hypersonicDragForwardFrac) * lowFinenessRatioFactor, 0));    //hypersonic drag used as a proxy for effects due to flow separation
                     xForcePressureAoA180.SetPoint(0, new Vector3d(_criticalMach, (sonicBaseDrag * 0.2f - (0.325f * hypersonicDragBackward * hypersonicDragBackwardFrac)) * lowFinenessRatioFactor, 0));
-
 
                     hypersonicDragBackwardFrac += 1f;       //avg fracs with 1 to get intermediate frac
                     hypersonicDragBackwardFrac *= 0.5f;
@@ -1978,14 +1978,14 @@ namespace FerramAerospaceResearch.FARAeroComponents
             return 0.07 * finenessRatio + 0.57;
         }
 
-        private double CriticalMachFactorForUnsmoothCrossSection(VoxelCrossSection[] crossSections, double finenessRatio, double sectionThickness)
+        private double CriticalMachFactorForUnsmoothCrossSection(VoxelCrossSection[] crossSections, int frontIndex, int backIndex, double finenessRatio, double sectionThickness)
         {
             double maxAbsRateOfChange = 0;
             double maxSecondDeriv = 0;
             double prevArea = 0;
             double invSectionThickness = 1/ sectionThickness;
 
-            for(int i = 0; i < crossSections.Length; i++)
+            for (int i = frontIndex; i <= backIndex; i++)
             {
                 double currentArea = crossSections[i].area;
                 double absRateOfChange = Math.Abs(currentArea - prevArea) * invSectionThickness;
