@@ -73,14 +73,67 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI.Simulation
             _bodyLength = vehicleAero.Length;
         }
 
+        public Vector3d GetCoM()
+        {
+            Vector3d CoM;
+            double mass, area, MAC, b;
+            GetCoMAndSize(out CoM, out mass, out area, out MAC, out b);
+            return CoM;
+        }
+
+        public void GetCoMAndSize(out Vector3d CoM, out double mass, out double area, out double MAC, out double b)
+        {
+            CoM = Vector3d.zero;
+            mass = 0; area = 0; MAC = 0; b = 0;
+
+            List<Part> partsList = EditorLogic.SortedShipList;
+            for (int i = 0; i < partsList.Count; i++)
+            {
+                Part p = partsList[i];
+                if (FARAeroUtil.IsNonphysical(p))
+                    continue;
+
+                double partMass = p.mass;
+                if (p.Resources.Count > 0)
+                    partMass += p.GetResourceMass();
+                //partMass += p.GetModuleMass(p.mass); // If you want to use GetModuleMass, you need to start from p.partInfo.mass, not p.mass
+
+                CoM += partMass * (Vector3d)p.transform.TransformPoint(p.CoMOffset);
+                mass += partMass;
+
+                FARWingAerodynamicModel w = p.GetComponent<FARWingAerodynamicModel>();
+                if (w != null && !w.isShielded)
+                {
+                    area += w.S;
+                    MAC += w.GetMAC() * w.S;
+                    b += w.Getb_2() * w.S;
+                }
+            }
+            if (area > 0)
+            {
+                MAC /= area;
+                b /= area;
+            }
+            else
+            {
+                area = _maxCrossSectionFromBody;
+                MAC = _bodyLength;
+                b = 1;
+            }
+            CoM /= mass;
+            mass *= 1000;
+        }
+
         public double CalculateAccelerationDueToGravity(CelestialBody body, double alt)
         {
-            double radius = body.Radius + alt;
-            double mu = body.gravParameter;
+            return CalculateEffectiveGravity(body, alt, 0);
+        }
 
-            double accel = radius * radius;
-            accel = mu / accel;
-            return accel;
+        public double CalculateEffectiveGravity(CelestialBody body, double altitude, double speed)
+        {
+            double radius = body.Radius + altitude;
+            double mu = body.gravParameter;
+            return mu / (radius * radius) - (speed * speed) / radius;
         }
 
         public void GetClCdCmSteady(InstantConditionSimInput input, out InstantConditionSimOutput output, bool clear, bool reset_stall = false)

@@ -170,7 +170,6 @@ namespace FerramAerospaceResearch.FARPartGeometry
             bool largerThanLast = pair.SetPlaneLocation(plane, location);
             if ((object)currentPart == null || overridingParts.Contains(p) || (largerThanLast && !overridingParts.Contains(currentPart)))
                 pair.part = p;
-
         }
 
         public unsafe bool VoxelPointExistsLocalIndex(int zeroBaseIndex)

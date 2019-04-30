@@ -61,21 +61,6 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI.Simulation
 
         public InstantConditionSimInput() { }
 
-        public InstantConditionSimInput(double alpha, double beta, double phi, double alphaDot, double betaDot, double phiDot, double machNumber, double pitchValue)
-        {
-            this.alpha = alpha;
-            this.beta = beta;
-            this.phi = phi;
-            this.alphaDot = alphaDot;
-            this.betaDot = betaDot;
-            this.phiDot = phiDot;
-            this.machNumber = machNumber;
-            this.pitchValue = pitchValue;
-
-            flaps = 0;
-            spoilers = false;
-        }
-
         public InstantConditionSimInput(double alpha, double beta, double phi, double alphaDot, double betaDot, double phiDot, double machNumber, double pitchValue, int flaps, bool spoilers)
         {
             this.alpha = alpha;
@@ -88,6 +73,11 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI.Simulation
             this.pitchValue = pitchValue;
             this.flaps = flaps;
             this.spoilers = spoilers;
+        }
+
+        public InstantConditionSimInput Clone()
+        {
+            return new InstantConditionSimInput(alpha, beta, phi, alphaDot, betaDot, phiDot, machNumber, pitchValue, flaps, spoilers);
         }
     }
 }

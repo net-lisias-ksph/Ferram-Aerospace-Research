@@ -311,21 +311,17 @@ namespace ferram4
         public Vector3d ComputeForceEditor(Vector3d velocityVector, double M, double density)
         {
             velocityEditor = velocityVector;
-
             rho = density;
-
             double AoA = CalculateAoA(velocityVector);
-            return CalculateForces(velocityVector, M, AoA, density);
+            return CalculateForces(velocityVector, M, AoA, density, true);
         }
         
         public void ComputeClCdEditor(Vector3d velocityVector, double M, double density)
         {
             velocityEditor = velocityVector;
-
             rho = density;
-
             double AoA = CalculateAoA(velocityVector);
-            CalculateForces(velocityVector, M, AoA, density);
+            CalculateForces(velocityVector, M, AoA, density, true);
         }
 
         protected override void ResetCenterOfLift()
@@ -352,7 +348,10 @@ namespace ferram4
             }
         }
 
-        
+        public void ResetCosSweepAngle()
+        {
+            cosSweepAngle = FARMathUtil.Clamp(sweepPerpLocal.y, 0, 1);
+        }
 
         public void EditorClClear(bool reset_stall)
         {
@@ -360,9 +359,6 @@ namespace ferram4
             Cd = 0;
             if (reset_stall)
                 stall = 0;
-            //            LastAoA = AoA;
-            //            LastAoADot = AoADot;
-            //downWash = 0;
         }
 
         #endregion
@@ -580,7 +576,7 @@ namespace ferram4
                     {
                         double AoA = CalculateAoA(velocity);
                         double failureForceScaling = FARAeroUtil.GetFailureForceScaling(vessel);
-                        Vector3d force = DoCalculateForces(velocity, machNumber, AoA, rho, failureForceScaling);
+                        Vector3d force = DoCalculateForces(velocity, machNumber, AoA, rho, failureForceScaling, true);
 
                         worldSpaceForce = force;
 
@@ -705,21 +701,21 @@ namespace ferram4
         }
 
         //This version also updates the wing centroid
-        public Vector3d CalculateForces(Vector3d velocity, double MachNumber, double AoA, double rho, bool updateAeroArrows = true)
+        public Vector3d CalculateForces(Vector3d velocity, double MachNumber, double AoA, double rho, bool updateAeroArrows)
         {
             CurWingCentroid = WingCentroid();
 
             return DoCalculateForces(velocity, MachNumber, AoA, rho, 1, updateAeroArrows);
         }
 
-        public Vector3d CalculateForces(Vector3d velocity, double MachNumber, double AoA, double rho, double failureForceScaling, bool updateAeroArrows = true)
+        public Vector3d CalculateForces(Vector3d velocity, double MachNumber, double AoA, double rho, double failureForceScaling, bool updateAeroArrows)
         {
             CurWingCentroid = WingCentroid();
 
             return DoCalculateForces(velocity, MachNumber, AoA, rho, failureForceScaling, updateAeroArrows);
         }
 
-        private Vector3d DoCalculateForces(Vector3d velocity, double MachNumber, double AoA, double rho, double failureForceScaling, bool updateAeroArrows = true)
+        private Vector3d DoCalculateForces(Vector3d velocity, double MachNumber, double AoA, double rho, double failureForceScaling, bool updateAeroArrows)
         {
             //This calculates the angle of attack, adjusting the part's orientation for any deflection
             //CalculateAoA();
@@ -750,7 +746,6 @@ namespace ferram4
             else
                 skinFrictionDrag = 0.005;
 
-
             skinFrictionDrag *= 1.1;    //account for thickness
 
             CalculateCoefficients(MachNumber, AoA, skinFrictionDrag);
@@ -766,7 +761,7 @@ namespace ferram4
             else
             {
                 L = liftDirection * (Cl * S) * q;    //lift; submergedDynPreskPa handles lift
-                D = -velocity_normalized * (Cd * S) * q;                         //drag is parallel to velocity vector
+                D = -velocity_normalized * (Cd * S) * q;    //drag is parallel to velocity vector
             }
 
             if(updateAeroArrows)
@@ -782,9 +777,7 @@ namespace ferram4
             double numericalControlFactor = (part.rb.mass * v_scalar * 0.67) / (force.magnitude * TimeWarp.fixedDeltaTime);
             force *= Math.Min(numericalControlFactor, 1);
 
-
             return force;
-
         }
 
         #endregion
@@ -958,11 +951,8 @@ namespace ferram4
         /// </summary>
         private void CalculateCoefficients(double MachNumber, double AoA, double skinFrictionCoefficient)
         {
-
             minStall = 0;
-
-            rawLiftSlope = CalculateSubsonicLiftSlope(MachNumber);// / AoA;     //Prandtl lifting Line
-
+            rawLiftSlope = CalculateSubsonicLiftSlope(MachNumber);
 
             double ACshift = 0, ACweight = 0;
             CalculateWingCamberInteractions(MachNumber, AoA, out ACshift, out ACweight);
@@ -1020,7 +1010,6 @@ namespace ferram4
 
                 Cl = finalLiftSlope * CosAoA * Math.Sign(AoA);
                 Cd = beta * Cl * Cl / piARe;
-
                 Cd += Cd0;
             }
             /*
@@ -1071,7 +1060,6 @@ namespace ferram4
                 double effectiveBeta = beta * supScale + (1 - supScale);
 
                 Cd = effectiveBeta * Cl * Cl / piARe;
-
                 Cd += Cd0;
             }
 

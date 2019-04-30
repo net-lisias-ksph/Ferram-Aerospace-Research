@@ -115,6 +115,7 @@
     <Compile Include="FARGUI\FAREditorGUI\Simulation\InstantConditionSim.cs" />
     <Compile Include="FARGUI\FAREditorGUI\Simulation\InstantConditionSimInput.cs" />
     <Compile Include="FARGUI\FAREditorGUI\Simulation\InstantConditionSimOutput.cs" />
+    <Compile Include="FARGUI\FAREditorGUI\Simulation\InstantConditionSimVars.cs" />
     <Compile Include="FARGUI\FAREditorGUI\Simulation\StabilityDerivApproxSim.cs" />
     <Compile Include="FARGUI\FAREditorGUI\Simulation\StabilityDerivOutput.cs" />
     <Compile Include="FARGUI\FAREditorGUI\Simulation\StabilityDerivExportOutput.cs" />

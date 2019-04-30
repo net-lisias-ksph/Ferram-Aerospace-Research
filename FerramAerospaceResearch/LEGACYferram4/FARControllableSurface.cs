@@ -644,7 +644,7 @@ namespace ferram4
                 if (pitchaxisDueToAoA != 0.0)
                 {
                     Vector3 tmpVec = rootTransform.up * Vector3.Dot(rootTransform.up, velocityVec) + rootTransform.forward * Vector3.Dot(rootTransform.forward, velocityVec);   //velocity vector projected onto a plane that divides the airplane into left and right halves
-                    double AoA = base.CalculateAoA(tmpVec.normalized);      //using base.CalculateAoA gets the deflection using WingAeroModel's code, which does not account for deflection; this gives us the AoA that the surface _would_ be at if it hadn't deflected at all.
+                    double AoA = base.CalculateAoA(tmpVec);    //using base.CalculateAoA gets the deflection using WingAeroModel's code, which does not account for deflection; this gives us the AoA that the surface _would_ be at if it hadn't deflected at all.
                     AoA = FARMathUtil.rad2deg * AoA;
                     if (double.IsNaN(AoA))
                         AoA = 0;

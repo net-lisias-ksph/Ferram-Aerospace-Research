@@ -1126,15 +1126,14 @@ namespace FerramAerospaceResearch.FARAeroComponents
             viscousDragFactor /= (double)numSections;   //fraction of viscous drag applied to each section
 
             double criticalMachNumber = CalculateCriticalMachNumber(finenessRatio);
-
-            _criticalMach = criticalMachNumber * CriticalMachFactorForUnsmoothCrossSection(_vehicleCrossSection, front, back, finenessRatio, _sectionThickness);
+            double cmfucs = CriticalMachFactorForUnsmoothCrossSection(_vehicleCrossSection, front, back, finenessRatio, _sectionThickness);
+            _criticalMach = criticalMachNumber * cmfucs;
 
             float lowFinenessRatioFactor = 1f;
             lowFinenessRatioFactor += 1f/(1 + 0.5f * (float)finenessRatio);
             float lowFinenessRatioBlendFactor = lowFinenessRatioFactor--;
 
             _moduleAndAreasDict.Clear();
-            //_newAeroSections = new List<FARAeroSection>();
 
             HashSet<FARAeroPartModule> tmpAeroModules = new HashSet<FARAeroPartModule>(ObjectReferenceEqualityComparer<FARAeroPartModule>.Default);
             _sonicDragArea = 0;
@@ -1147,7 +1146,7 @@ namespace FerramAerospaceResearch.FARAeroComponents
 
             for (int i = 0; i <= numSections; i++)  //index in the cross sections
             {
-                int index = i + front;      //index along the actual body
+                int index = i + front;    //index along the actual body
 
                 double prevArea, curArea, nextArea;
 

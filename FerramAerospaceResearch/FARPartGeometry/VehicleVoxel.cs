@@ -158,9 +158,7 @@ namespace FerramAerospaceResearch.FARPartGeometry
         public static VehicleVoxel CreateNewVoxel(List<Part> partList, List<GeometryPartModule> geoModules, int elementCount, bool multiThreaded = true, bool solidify = true)
         {
             VehicleVoxel newVoxel = new VehicleVoxel();
-
             newVoxel.CreateVoxel(partList, geoModules, elementCount, multiThreaded, solidify);
-
             return newVoxel;
         }
 
@@ -607,7 +605,6 @@ namespace FerramAerospaceResearch.FARPartGeometry
 
                             if (jSect3 < 0)         //if the largest sect is below the limit, they all are
                                 continue;
-
 
                             if (jSect1 == jSect3)        //If chunk indices are identical, only get that one and it's very simple; only need to check 1 and 3, because if any are different, it must be those
                             {

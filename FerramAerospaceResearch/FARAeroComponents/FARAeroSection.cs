@@ -119,7 +119,6 @@ namespace FerramAerospaceResearch.FARAeroComponents
                 partData.Capacity = moduleList.Capacity;
 
             Vector3 worldVehicleAxis = vesselToWorldMatrix.MultiplyVector(vehicleMainAxis);
-
             Vector3 centroidLocationAlongxRef = Vector3.Project(centroidWorldSpace, worldVehicleAxis);
             Vector3 centroidSansxRef = Vector3.ProjectOnPlane(centroidWorldSpace, worldVehicleAxis);
 
@@ -134,9 +133,7 @@ namespace FerramAerospaceResearch.FARAeroComponents
                     totalDragFactor += dragFactor[i];
                 }
             }
-
             worldSpaceAvgPos /= totalDragFactor;
-
             worldSpaceAvgPos = Vector3.ProjectOnPlane(worldSpaceAvgPos, worldVehicleAxis);
 
             Vector3 avgPosDiffFromCentroid = centroidSansxRef - worldSpaceAvgPos;
@@ -283,7 +280,7 @@ namespace FerramAerospaceResearch.FARAeroComponents
             partData.Clear();
             handledAeroModulesIndexDict.Clear();
         }
-        
+
         public void PredictionCalculateAeroForces(float atmDensity, float machNumber, float reynoldsPerUnitLength, float pseudoKnudsenNumber, float skinFrictionDrag, Vector3 vel, ferram4.FARCenterQuery center)
         {
             if (partData.Count == 0)
@@ -435,13 +432,9 @@ namespace FerramAerospaceResearch.FARAeroComponents
                 {
                     PartData data2 = partData[i];
                     FARAeroPartModule module = data2.aeroModule;
-                    if ((object)module == null)
-                        continue;
 
-                    if (module.part == null || module.part.partTransform == null)
-                    {
+                    if (((object)module == null) || module.part == null || module.part.partTransform == null)
                         continue;
-                    }
 
                     centroid = module.part.partTransform.localToWorldMatrix.MultiplyPoint3x4(data2.centroidPartSpace);
                     center.AddForce(centroid, forceVector * data2.dragFactor);
@@ -464,20 +457,14 @@ namespace FerramAerospaceResearch.FARAeroComponents
                 PartData data = partData[i];
                 FARAeroPartModule aeroModule = data.aeroModule;
                 if ((object)aeroModule == null)
-                {
                     continue;
-                }
 
                 Vector3 xRefVector = data.xRefVectorPartSpace;
                 Vector3 nRefVector = data.nRefVectorPartSpace;
-
                 Vector3 velLocal = aeroModule.partLocalVel;
-
                 Vector3 angVelLocal = aeroModule.partLocalAngVel;
-
                 velLocal += Vector3.Cross(data.centroidPartSpace, angVelLocal);       //some transform issue here, needs investigation
                 Vector3 velLocalNorm = velLocal.normalized;
-
                 Vector3 localNormalForceVec = Vector3.ProjectOnPlane(-velLocalNorm, xRefVector).normalized;
 
                 double cosAoA = Vector3.Dot(xRefVector, velLocalNorm);
@@ -486,7 +473,6 @@ namespace FerramAerospaceResearch.FARAeroComponents
                 double sinAoA = Math.Sqrt(sinSqrAoA);
                 double sin2AoA = 2 * sinAoA * Math.Abs(cosAoA);
                 double cosHalfAoA = Math.Sqrt(0.5 + 0.5 * Math.Abs(cosAoA));
-
 
                 double nForce = 0;
                     nForce = potentialFlowNormalForce * Math.Sign(cosAoA) * cosHalfAoA * sin2AoA;  //potential flow normal force
@@ -501,7 +487,6 @@ namespace FerramAerospaceResearch.FARAeroComponents
 
                 normalForceFactor = invFlatnessRatio * (1 - normalForceFactor) + flatnessRatio * normalForceFactor;     //accounts for changes in relative flatness of shape
 
-                
                 float crossFlowMach, crossFlowReynolds;
                 crossFlowMach = machNumber * (float)sinAoA;
                 crossFlowReynolds = reynoldsPerUnitLength * diameter * (float)sinAoA / normalForceFactor;

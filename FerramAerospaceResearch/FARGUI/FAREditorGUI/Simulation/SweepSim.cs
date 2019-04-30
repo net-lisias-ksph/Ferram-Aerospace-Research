@@ -87,7 +87,7 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI.Simulation
 
                 InstantConditionSimOutput output;
 
-                _instantCondition.GetClCdCmSteady(input, out output, i == 0);
+                _instantCondition.GetClCdCmSteady(input, out output, i == 0, false);
                 AlphaValues[i] = input.machNumber;
                 ClValues[i] = output.Cl;
                 CdValues[i] = output.Cd;
@@ -116,7 +116,6 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI.Simulation
 
             FARAeroUtil.ResetEditorParts();
 
-
             double[] ClValues = new double[(int)numPoints];
             double[] CdValues = new double[(int)numPoints];
             double[] CmValues = new double[(int)numPoints];
@@ -134,14 +133,12 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI.Simulation
                     angle = i / (double)numPoints * (upperBound - lowerBound) + lowerBound;
                 else
                     angle = (i - (double)numPoints + 1) / (double)numPoints * (lowerBound - upperBound) + upperBound;
-
                 input.alpha = angle;
 
                 InstantConditionSimOutput output;
 
-                _instantCondition.GetClCdCmSteady(input, out output, i == 0);
+                _instantCondition.GetClCdCmSteady(input, out output, i == 0, false);
 
-                //                MonoBehaviour.print("Cl: " + Cl + " Cd: " + Cd);
                 if (i < numPoints)
                 {
                     AlphaValues[i] = angle;
@@ -172,7 +169,6 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI.Simulation
 
             data.AddData(LDValues2, GUIColors.GetColor(3) * 0.5f, "L/D2", false);
             data.AddData(LDValues, GUIColors.GetColor(3), Localizer.Format("FARAbbrevL_D"), true);
-
 
             return data;
         }

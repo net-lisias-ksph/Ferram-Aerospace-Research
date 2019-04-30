@@ -76,7 +76,6 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI.Simulation
             double q = u0 * u0 * density * 0.5f;
 
             StabilityDerivOutput stabDerivOutput = new StabilityDerivOutput();
-            StabilityDerivExportVariables stabDerivExport = new StabilityDerivExportVariables();
             stabDerivOutput.nominalVelocity = u0;
             stabDerivOutput.altitude = alt;
             stabDerivOutput.body = body;
@@ -216,7 +215,6 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI.Simulation
             double neededCl = mass * effectiveG / (q * area);
 
             _instantCondition.GetClCdCmSteady(input, out pertOutput, true, true);
-            //Longitudinal Mess
             _instantCondition.SetState(machNumber, neededCl, CoM, 0, input.flaps, input.spoilers);
 
             double alpha = FARMathUtil.SegmentSearchMethod(_instantCondition.FunctionIterateForAlpha, new FARMathUtil.IterationTolerances());
@@ -309,12 +307,12 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI.Simulation
             stabDerivOutput.stabDerivs[13] = pertOutput.Cd; //Xe
             stabDerivOutput.stabDerivs[14] = pertOutput.Cm; //Me
 
-            //Lateral Mess
 
             input.pitchValue = 0;
             input.beta = (beta + 2);
 
             _instantCondition.GetClCdCmSteady(input, out pertOutput, true, false);
+
             pertOutput.Cy = (pertOutput.Cy - nominalOutput.Cy) / (2 * FARMathUtil.deg2rad);                   //sideslip angle derivs
             pertOutput.Cn = (pertOutput.Cn - nominalOutput.Cn) / (2 * FARMathUtil.deg2rad);
             pertOutput.C_roll = (pertOutput.C_roll - nominalOutput.C_roll) / (2 * FARMathUtil.deg2rad);
@@ -353,7 +351,9 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI.Simulation
 
             input.betaDot = -0.05;
 
-            _instantCondition.GetClCdCmSteady(input, out pertOutput, true, false); pertOutput.Cy = (pertOutput.Cy - nominalOutput.Cy) / 0.05f;                   //yaw rate derivs
+            _instantCondition.GetClCdCmSteady(input, out pertOutput, true, false);
+
+            pertOutput.Cy = (pertOutput.Cy - nominalOutput.Cy) / 0.05f;                   //yaw rate derivs
             pertOutput.Cn = (pertOutput.Cn - nominalOutput.Cn) / 0.05f;
             pertOutput.C_roll = (pertOutput.C_roll - nominalOutput.C_roll) / 0.05f;
 
@@ -366,6 +366,7 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI.Simulation
             stabDerivOutput.stabDerivs[22] = pertOutput.C_roll; //Lr
 
             // Assign values to export variables
+            StabilityDerivExportVariables stabDerivExport = new StabilityDerivExportVariables();
             stabDerivExport.craftmass = mass;
             stabDerivExport.envpressure = pressure;
             stabDerivExport.envtemperature = temperature;
@@ -374,7 +375,7 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI.Simulation
             stabDerivExport.envg = _instantCondition.CalculateAccelerationDueToGravity(body, alt);
             stabDerivExport.sitmach = machNumber;
             stabDerivExport.sitdynpres = q;
-            stabDerivExport.siteffg = effectiveG;
+            stabDerivExport.siteffg = _instantCondition.CalculateEffectiveGravity(body, alt, u0);
 
             return new StabilityDerivExportOutput(stabDerivOutput, stabDerivExport);
         }

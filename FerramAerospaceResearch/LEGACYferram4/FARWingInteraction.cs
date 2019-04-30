@@ -102,7 +102,6 @@ namespace ferram4
         public bool HasWingsUpstream { get { return hasWingsUpstream; } private set { hasWingsUpstream = value; } }
 
 
-
         private static FloatCurve wingCamberFactor = null;
         private static FloatCurve wingCamberMoment = null;
 

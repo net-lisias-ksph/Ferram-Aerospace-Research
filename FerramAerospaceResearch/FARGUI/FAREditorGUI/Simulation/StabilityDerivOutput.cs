@@ -82,11 +82,22 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI.Simulation
         public double area;
 
         public InstantConditionSimIterationResult stableCondition;
-        public double[] stabDerivs = new double[27];
+        public double[] stabDerivs;
 
         public StabilityDerivOutput()
         {
             stableCondition = new InstantConditionSimIterationResult(0, 0, 0, 0, 0, "");
+            stabDerivs = new double[27];
+        }
+
+        /// <summary>
+        /// Creates a partially initialized StabilityDerivOutput object.
+        /// Notice that the parameters are not cloned; the references are used as is.
+        /// </summary>
+        public StabilityDerivOutput(InstantConditionSimIterationResult stableCondition, double[] derivatives)
+        {
+            this.stableCondition = stableCondition;
+            this.stabDerivs = derivatives;
         }
     }
 }
