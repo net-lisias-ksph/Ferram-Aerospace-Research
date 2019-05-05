@@ -120,6 +120,7 @@
     <Compile Include="FARGUI\FAREditorGUI\Simulation\StabilityDerivOutput.cs" />
     <Compile Include="FARGUI\FAREditorGUI\Simulation\StabilityDerivExportOutput.cs" />
     <Compile Include="FARGUI\FAREditorGUI\Simulation\StabilityDerivCalculator.cs" />
+    <Compile Include="FARGUI\FAREditorGUI\Simulation\SweepExportOutput.cs" />
     <Compile Include="FARGUI\FAREditorGUI\Simulation\SweepSim.cs" />
     <Compile Include="FARGUI\FAREditorGUI\EditorAreaRulingOverlay.cs" />
     <Compile Include="FARGUI\FAREditorGUI\StabilityDerivSimulationGUI.cs" />

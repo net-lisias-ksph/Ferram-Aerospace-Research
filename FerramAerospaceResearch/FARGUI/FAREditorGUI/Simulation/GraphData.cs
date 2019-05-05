@@ -55,14 +55,16 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI.Simulation
         public List<string> lineNames;
         public List<bool> lineNameVisible;
         public List<Color> lineColors;
+        public SweepExportOutput exportdata;
 
         public GraphData()
         {
+            xValues = null;
             yValues = new List<double[]>();
             lineNames = new List<string>();
             lineColors = new List<Color>();
             lineNameVisible = new List<bool>();
-            xValues = null;
+            exportdata = new SweepExportOutput();
         }
 
         public void AddData(double[] yVals, Color lineColor, string name, bool nameVisible)

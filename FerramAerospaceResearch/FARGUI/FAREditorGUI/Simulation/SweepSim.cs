@@ -102,6 +102,10 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI.Simulation
             data.AddData(CmValues, GUIColors.GetColor(2), Localizer.Format("FARAbbrevCm"), true);
             data.AddData(LDValues, GUIColors.GetColor(3), Localizer.Format("FARAbbrevL_D"), true);
 
+            data.exportdata.AddSizeVariables(_instantCondition, pitch, flapSetting, spoilers);
+            data.exportdata.AddMachSweepXVariable(aoAdegrees, AlphaValues);
+            data.exportdata.AddYVariables(data);
+
             return data;
         }
 
@@ -160,15 +164,16 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI.Simulation
             data.xValues = AlphaValues;
             data.AddData(ClValues2, GUIColors.GetColor(0) * 0.5f, "Cl2", false);
             data.AddData(ClValues, GUIColors.GetColor(0), Localizer.Format("FARAbbrevCl"), true);
-
             data.AddData(CdValues2, GUIColors.GetColor(1) * 0.5f, "Cd2", false);
             data.AddData(CdValues, GUIColors.GetColor(1), Localizer.Format("FARAbbrevCd"), true);
-
             data.AddData(CmValues2, GUIColors.GetColor(2) * 0.5f, "Cm2", false);
             data.AddData(CmValues, GUIColors.GetColor(2), Localizer.Format("FARAbbrevCm"), true);
-
             data.AddData(LDValues2, GUIColors.GetColor(3) * 0.5f, "L/D2", false);
             data.AddData(LDValues, GUIColors.GetColor(3), Localizer.Format("FARAbbrevL_D"), true);
+
+            data.exportdata.AddSizeVariables(_instantCondition, pitch, flapSetting, spoilers);
+            data.exportdata.AddAoASweepXVariable(machNumber, AlphaValues);
+            data.exportdata.AddYVariables(data);
 
             return data;
         }

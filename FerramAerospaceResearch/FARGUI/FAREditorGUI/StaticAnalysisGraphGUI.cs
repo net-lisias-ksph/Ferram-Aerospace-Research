@@ -155,7 +155,6 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI
             GUILayout.BeginHorizontal();
             GraphDisplay();
             RightGraphInputsGUI(isMachMode ? machSweepInputs : aoASweepInputs);
-
             GUILayout.EndHorizontal();
 
             BelowGraphInputsGUI(isMachMode ? machSweepInputs : aoASweepInputs);
@@ -253,6 +252,7 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI
                     }
 
                     UpdateGraph(data, isMachMode ? Localizer.Format("FAREditorStaticGraphMach") : Localizer.Format("FAREditorStaticGraphAoA"), Localizer.Format("FAREditorStaticGraphCoeff"), lowerBound, upperBound);
+                    data.exportdata.Export(isMachMode); // overwrites the text file with the new data
                 }
             }
             GUILayout.EndHorizontal();
