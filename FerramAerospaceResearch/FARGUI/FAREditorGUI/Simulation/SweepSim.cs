@@ -77,7 +77,7 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI.Simulation
             double[] AlphaValues = new double[(int)numPoints];
 
             InstantConditionSimInput input = new InstantConditionSimInput(aoAdegrees, 0, 0, 0, 0, 0, 0, pitch, flapSetting, spoilers);
-            
+
             for (int i = 0; i < numPoints; i++)
             {
                 input.machNumber = i / (double)numPoints * (upperBound - lowerBound) + lowerBound;
@@ -178,5 +178,39 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI.Simulation
             return data;
         }
 
+        public int ExportSweep(CelestialBody body, double pitch, int flapSetting, bool spoilers)
+        {
+            if (!IsReady())
+                return 0;
+
+            FARAeroUtil.UpdateCurrentActiveBody(body);
+            FARAeroUtil.ResetEditorParts();
+
+            StaticAnalysisExportFile exportdata = new StaticAnalysisExportFile();
+            InstantConditionSimInput input = new InstantConditionSimInput(0, 0, 0, 0, 0, 0, 0, pitch, flapSetting, spoilers);
+            InstantConditionSimOutput output;
+
+            // Rodhern: TODO Do stuff (?)
+
+            // Loop through each combination (two dimensions).
+            foreach (float mach in exportdata.MachNumberList)
+            {
+                input.machNumber = mach;
+
+                // Rodhern: TODO Do stuff (?) (remark: maybe temporarily set alpha to zero)
+
+                foreach (float aoadeg in exportdata.AoADegreeList)
+                {
+                    input.alpha = aoadeg;
+
+                    // Rodhern: TODO Do stuff (calculation)
+
+                    exportdata.AddDatapoint();
+                }
+            }
+
+            exportdata.Export();
+            return exportdata.DataCount;
+        }
     }
 }

@@ -124,6 +124,7 @@
     <Compile Include="FARGUI\FAREditorGUI\Simulation\SweepSim.cs" />
     <Compile Include="FARGUI\FAREditorGUI\EditorAreaRulingOverlay.cs" />
     <Compile Include="FARGUI\FAREditorGUI\StabilityDerivSimulationGUI.cs" />
+    <Compile Include="FARGUI\FAREditorGUI\StaticAnalysisExport.cs" />
     <Compile Include="FARGUI\FAREditorGUI\StaticAnalysisGraphGUI.cs" />
     <Compile Include="FARGUI\FAREditorGUI\EditorGUI.cs" />
     <Compile Include="FARGUI\FARFlightGUI\FlightGUI.cs" />

@@ -148,6 +148,21 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI
 
             GUILayout.BeginHorizontal();
             GUILayout.Label(isMachMode ? Localizer.Format("FAREditorStaticMachSweep") : Localizer.Format("FAREditorStaticAoASweep"), GUILayout.Width(250));
+            if (GUILayout.Button(Localizer.Format("FAREditorStaticLoopButton"), GUILayout.Width(175.0F)))
+            {
+                GraphInputs input = (isMachMode ? machSweepInputs : aoASweepInputs);
+                int n = simManager.SweepSim.ExportSweep(bodySettingDropdown.ActiveSelection, input.PitchSetting, input.flapSetting, input.spoilers);
+                if (n > 0)
+                    PopupDialog.SpawnPopupDialog(new Vector2(0, 0), new Vector2(0, 0), "FARStaticLoopCount",
+                        Localizer.Format("FAREditorStaticLoopDone"),
+                        Localizer.Format("FAREditorStaticLoopDoneExp", n),
+                        Localizer.Format("FARGUIOKButton"), true, HighLogic.UISkin);
+                else
+                    PopupDialog.SpawnPopupDialog(new Vector2(0, 0), new Vector2(0, 0), "FARStaticSaveError",
+                        Localizer.Format("FAREditorStaticSaveError"),
+                        Localizer.Format("FAREditorStaticSaveErrorExp"),
+                        Localizer.Format("FARGUIOKButton"), true, HighLogic.UISkin);
+            }
             if (GUILayout.Button(isMachMode ? Localizer.Format("FAREditorStaticSwitchAoA") : Localizer.Format("FAREditorStaticSwitchMach")))
                 isMachMode = !isMachMode;
             GUILayout.EndHorizontal();
@@ -229,9 +244,7 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI
                 numPts = Math.Ceiling(numPts);
                 input.numPts = numPts.ToString();
 
-                pitchSetting = double.Parse(input.pitchSetting);
-                pitchSetting = FARMathUtil.Clamp(pitchSetting, -1, 1);
-                input.pitchSetting = pitchSetting.ToString();
+                pitchSetting = input.PitchSetting;
 
                 otherInput = double.Parse(input.otherInput);
 
@@ -335,6 +348,25 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI
             public string pitchSetting;
             public string otherInput;
             public bool spoilers;
+
+            /// <summary>
+            /// Parse pitchSetting as a double.
+            /// </summary>
+            public double PitchSetting
+            {
+                get
+                {
+                    double dval;
+                    if (double.TryParse(pitchSetting, out dval))
+                    {
+                        dval = FARMathUtil.Clamp(dval, -1, 1);
+                        pitchSetting = dval.ToString();
+                        return dval;
+                    }
+                    else
+                        return Double.NaN;
+                }
+            }
         }
 
     }

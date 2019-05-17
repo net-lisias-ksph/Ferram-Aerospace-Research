@@ -71,14 +71,17 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI.Simulation
             }
         }
 
+        private const string floatstyleculture = "en-US";
+        private const string floatstyleformat = "E16";
+
         private string[] GetExportOutputLines()
         {
             List<string> lines = new List<string>();
             lines.Add("% SweepData");
-            lines.Add("%  Exported data points from latest graph update.");
+            lines.Add("%  Exported data from latest graph update.");
 
             System.Globalization.CultureInfo enus =
-                System.Globalization.CultureInfo.CreateSpecificCulture("en-US");
+                System.Globalization.CultureInfo.CreateSpecificCulture(floatstyleculture);
 
             foreach (SweepExportOutputVariable variable in variables)
             {
@@ -86,7 +89,7 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI.Simulation
                 lines.Add("% " + variable.comment + ".");
                 lines.Add(variable.name + " = [ ...");
                 foreach (double value in variable.values)
-                    lines.Add("   " + value.ToString("E16", enus) + "; ...");
+                    lines.Add("   " + value.ToString(floatstyleformat, enus) + "; ...");
                 lines.Add("   ];");
                 if (variable.values.Length > 4)
                     lines.Add(""); // add extra space after long data segments
@@ -97,11 +100,11 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI.Simulation
 
         public void Export(bool toMachFile)
         {
-            string[] lines = GetExportOutputLines();
-
             string path = KSPUtil.ApplicationRootPath;
             path += "GameData/FerramAerospaceResearch/Plugins/PluginData/";
             path += toMachFile ? "MachSweepData.m" : "AoASweepData.m";
+
+            string[] lines = GetExportOutputLines();
 
             File.WriteAllLines(path, lines);
         }
