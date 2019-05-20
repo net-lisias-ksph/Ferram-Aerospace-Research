@@ -53,23 +53,131 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI
         public int DataCount
         { get { return datarows.Count; } }
 
-        public void AddDatapoint()
+        public void AddDatapoint(double mach, double aoadeg, double Cl, double Cd, double Cm)
         {
-            throw new NotImplementedException("Static analysis export functionality not yet implemented.");
-            datarows.Add(new double[] {});
+            datarows.Add(new double[] { mach, aoadeg, Cl, Cd, Cm });
         }
 
-        // Rodhern: TODO Add static methods to help load configuration from file.
+        static public bool ReadWhiteSpace(string[] lines, int lineoffset, out int blanklinecount)
+        {
+            blanklinecount = 0;
+            while (lines.Length > lineoffset + blanklinecount)
+            {
+                if (lines[lineoffset + blanklinecount].Trim() == "")
+                    blanklinecount++;
+                else
+                    break;
+            }
+            return blanklinecount > 0;
+        }
 
-        private static void LoadConfigLists(out float[] machlist, out float[] aoadeglist, System.Globalization.CultureInfo enus)
+        static public bool ReadMatrix(string[] lines, int lineoffset, out string name, out float[,] matrix, System.Globalization.CultureInfo enus)
+        {
+            name = null; matrix = null;
+            if (lineoffset < 0)
+                return false;
+            if (lines.Length < lineoffset + 4)
+                return false;
+
+            bool b0 = lines[lineoffset + 0].StartsWith("# name: ");
+            bool b1 = lines[lineoffset + 1] == "# type: matrix";
+            bool b2 = lines[lineoffset + 2].StartsWith("# rows: ");
+            bool b3 = lines[lineoffset + 3].StartsWith("# columns: ");
+            if (!(b0 && b1 && b2 && b3))
+                return false;
+
+            name = lines[lineoffset + 0].Remove(0, 8).Trim();
+            int rows = int.Parse(lines[lineoffset + 2].Remove(0, 8));
+            int cols = int.Parse(lines[lineoffset + 3].Remove(0, 11));
+            if (name.Length == 0 || rows < 0 || cols < 0
+                || (rows > 0 && cols == 0) || (rows == 0 && cols > 0)
+                || lines.Length < lineoffset + 4 + rows)
+                return false;
+
+            var floatstyle = System.Globalization.NumberStyles.Float;
+            List<float[]> jagged = new List<float[]>(rows);
+
+            for (int i = lineoffset + 4; i < lineoffset + rows + 4; i++)
+            {
+                string[] rowvals = lines[i].Trim().Split(new char[] { ' ' });
+                if (rowvals.Length == cols)
+                {
+                    float[] row = new float[cols];
+                    for (int j = 0; j < cols; j++)
+                    {
+                        float value;
+                        if (!float.TryParse(rowvals[j], floatstyle, enus, out value))
+                            return false;
+                        row[j] = value;
+                    }
+                    jagged.Add(row);
+                }
+                else return false;
+            }
+
+            matrix = new float[rows, cols];
+            for (int i = 0; i < rows; i++)
+                for (int j = 0; j < cols; j++)
+                    matrix[i,j] = jagged[i][j];
+            return true;
+        }
+
+        private static float[] CopyToArray(float[,] matrix)
+        {
+            int rows = matrix.GetLength(0);
+            int cols = matrix.GetLength(1);
+            float[] result = new float[rows * cols];
+            for (int i = 0; i < rows; i++)
+                for (int j = 0; j < cols; j++)
+                    result[i + j * rows] = matrix[i, j];
+            return result;
+        }
+
+        static public void LoadConfigLists(out float[] machlist, out float[] aoadeglist, System.Globalization.CultureInfo enus)
         {
             machlist = new float[0];
             aoadeglist = new float[0];
+
+            string path = ConfigFilePath;
+            if (!File.Exists(path))
+                return;
+
+            string[] lines = File.ReadAllLines(path, System.Text.Encoding.Default);
+            if (lines.Length < 2 || !lines[0].StartsWith("# Created by"))
+                return;
+
+            int i = 1;
+            while (i < lines.Length)
+            {
+                int blanklines;
+                if (ReadWhiteSpace(lines, i, out blanklines))
+                    i = i + blanklines;
+
+                string mname; float[,] mvalues;
+                if (ReadMatrix(lines, i, out mname, out mvalues, enus))
+                {
+                    i = i + 4 + mvalues.GetLength(0);
+                    switch (mname)
+                    {
+                        case "mach":
+                            machlist = CopyToArray(mvalues);
+                            break;
+                        case "aoa":
+                            aoadeglist = CopyToArray(mvalues);
+                            break;
+                        default:
+                            Debug.Log("[Rodhern] FAR: Matrix named '" + mname + "' (" + mvalues.GetLength(0) + " x " + mvalues.GetLength(1) + ") ignored;"
+                                    + " only variables named 'mach' and 'aoa' are considered when loading static analysis export configuration.");
+                            break;
+                    }
+                }
+                else break;
+            }
         }
 
         private static string Header()
         {
-            return "# not yet implemented";
+            return "mach; aoa; Cl; Cd; Cm";
         }
 
         private static string CSVRow(double[] values, System.Globalization.CultureInfo enus, string format)

@@ -190,22 +190,20 @@ namespace FerramAerospaceResearch.FARGUI.FAREditorGUI.Simulation
             InstantConditionSimInput input = new InstantConditionSimInput(0, 0, 0, 0, 0, 0, 0, pitch, flapSetting, spoilers);
             InstantConditionSimOutput output;
 
-            // Rodhern: TODO Do stuff (?)
+            Vector3d centerofmass = _instantCondition.GetCoM();
 
             // Loop through each combination (two dimensions).
             foreach (float mach in exportdata.MachNumberList)
             {
                 input.machNumber = mach;
-
-                // Rodhern: TODO Do stuff (?) (remark: maybe temporarily set alpha to zero)
+                input.alpha = 0; // zero is used as a neutral value for the reset
+                _instantCondition.ResetClCdCmSteady(centerofmass, input); // reset old results (particularly cossweep) that may not reflect the current mach number
 
                 foreach (float aoadeg in exportdata.AoADegreeList)
                 {
                     input.alpha = aoadeg;
-
-                    // Rodhern: TODO Do stuff (calculation)
-
-                    exportdata.AddDatapoint();
+                    _instantCondition.GetClCdCmSteady(input, out output, true, true);
+                    exportdata.AddDatapoint(mach, aoadeg, output.Cl, output.Cd, output.Cm);
                 }
             }
 
