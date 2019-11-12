@@ -1,5 +1,10 @@
 # Ferram Aerospace Research :: Change Log
 
+* 2016-0518: 0.15.6.5_Knudsen (ferram4) for KSP 1.1.2
+	+ Update to ModularFlightIntegrator 1.1.4
+	+ Fix a serious issue where wings would provide no forces and forces would be distributed incorrectly across vehicles
+	+ Fix an issue where wing symmetry counterparts would not have equal masses
+	+ Fix non-zero convective heat flux on shielded parts
 * 2016-0515: 0.15.6.4_Kleinhans (ferram4) for KSP 1.1.2
 	+ Fix a no-drag issue with asteroids
 	+ Fix a physics breaking issue with Tweakscaled wing parts, thanks pellinor
