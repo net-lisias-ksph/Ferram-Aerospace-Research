@@ -1,5 +1,16 @@
 # Ferram Aerospace Research :: Change Log
 
+* 2015-0520: 0.15_2_Ferri (ferram4) for KSP 1.0.0
+	+ Improved voxelization accuracy
+	+ Changed CoL code again to try and make it more useful
+	+ Cleaned up some unnecessary calculations
+	+ Fixed voxelization breaking after many voxelization events; this fixes no-drag situations
+	+ Fixed deployed spoilers not producing drag if mounted flush with vehicle
+	+ Fixed some main axis issues
+	+ Fixed improper heating area for atmospheric heat
+	+ Fixed interaction with KIS breaking things
+	+ Fixed some data not saving
+	+ Fixed exceptions during EVA
 * 2015-0511: 0.15_Fanno (ferram4) for KSP 1.0.0
 	+ Fixed improper voxelization of debris and vehicles dropped from existing vessel, including effects on stock "occlusion" system
 	+ Fixed improper determination of vehicle main axis
