@@ -1,5 +1,12 @@
 # Ferram Aerospace Research :: Change Log
 
+* 2016-0208: 0.15.5.6_Jacobs (ferram4) for KSP 1.0.5
+	+ Update to MM 2.6.18
+	+ Fix more negative sonic drag issues
+	+ Fix unrealistically low sonic drag
+	+ Fix failure to load saved FAR data in flight
+	+ Fix unrealistically high numbers in indicated airspeed at higher Mach numbers
+	+ Lower critical Mach number for slender vehicles with sudden bulges and waviness in their cross-section
 * 2016-0203: 0.15.5.5_Hugoniot (ferram4) for KSP 1.0.5
 	+ Fix an inconsistency in calculations of sonic drag
 	+ Fix possibility of sonic drag resulting in negative drag coefficients on very blunt shapes
