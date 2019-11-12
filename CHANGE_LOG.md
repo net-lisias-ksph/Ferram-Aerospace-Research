@@ -1,5 +1,16 @@
 # Ferram Aerospace Research :: Change Log
 
+* 2015-1113: 0.15.5.3_vonHelmholtz (ferram4) for KSP 1.0.5
+	+ Upgrade to MM 2.6.13
+	+ RealChuteLite consistency with RealChute calcs and optimizations thanks to stupid_chris
+	+ Implement dynamic smoothing calculations based on relative "filledness" of voxel; should help reduce effect of voxel-resolution-induced smoothing on larger vehicles
+	+ Tweaks to critical Mach calculations
+	+ Fix "silent" KSP update breaking hydrodynamic drag
+	+ Fix some voxelization irregularities
+	+ Fix control surface flap settings not appearing if the settings are turned on in flight
+	+ Fix some other control surface in-flight changes oddities
+	+ Fix Firehound MS example craft action groups not acting in symmetry
+	+ Added E42 example craft by tetryds
 * 2015-1110: 0.15.5.2_Helmbold (ferram4) for KSP 1.0.5
 	+ Compatibility with KSP 1.0.5
 	+ Upgrade to MFI 1.1.2
