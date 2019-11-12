@@ -1,5 +1,7 @@
 # Ferram Aerospace Research :: Change Log
 
+* 2019-0623: 0.15.11.1_Mach (dkavolis) for KSP 1.7
+	+ Fix #72 (#73)
 * 2019-0620: 0.15.11.0_Mach (dkavolis) for KSP 1.7
 	+ Chute staging now works with stage lock (#68)
 	+ Fix German localization formatting (#70, @HebaruSan)
