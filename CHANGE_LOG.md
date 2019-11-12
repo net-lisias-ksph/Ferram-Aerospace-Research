@@ -5,6 +5,11 @@
 	+ Update CompatibilityChecker version
 	+ Update license
 	+ Fix an issue where voxels could be incredibly asymmetric on symmetric crafts
+* 2016-0630: 0.15.7.1_Kutta (ferram4) for KSP 1.1.3
+	+ Update to MFI 1.1.6 to fix an incompatibility with Kopernicus and the earlier version
+	+ Update CompatibilityChecker version
+	+ Update license
+	+ Fix an issue where voxels could be incredibly asymmetric on symmetric crafts
 * 2016-0624: 0.15.7_Kuchemann (ferram4) for KSP 1.1.3
 	+ Update to ModuleManager 2.6.25
 	+ Update for KSP 1.1.3 compatibility
