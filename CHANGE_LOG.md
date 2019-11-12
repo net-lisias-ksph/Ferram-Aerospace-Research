@@ -1,5 +1,12 @@
 # Ferram Aerospace Research :: Change Log
 
+* 2019-0312: 0.15.9.7_Lumley (dkavolis) for KSP 1.6
+	+ Note for Kopernicus users: DO NOT overwrite MFI that comes with Kopernicus since it is locked to that particular version
+	+ Update to MM 4.0.2
+	+ Fix skinned meshes having scale applied twice in voxelization ([#30](https://github.com/dkavolis/Ferram-Aerospace-Research/pull/30))
+	+ Fix new stock parts ([#24](https://github.com/dkavolis/Ferram-Aerospace-Research/pull/24), thanks [@HSJasperism](https://github.com/HSJasperism))
+	+ Greatly improved debug visual voxels framerate ([#18](https://github.com/dkavolis/Ferram-Aerospace-Research/pull/18), [#29](https://github.com/dkavolis/Ferram-Aerospace-Research/pull/29))
+	+ Enlarged debug voxel texture for higher fidelity ([#18](https://github.com/dkavolis/Ferram-Aerospace-Research/pull/18))
 * 2018-1224: 0.15.9.6_Lin (dkavolis) for KSP 1.6
 	+ Note for Kopernicus users: DO NOT overwrite MFI that comes with Kopernicus since it is locked to that particular version
 	+ Update for KSP 1.6
