@@ -1,5 +1,26 @@
 # Ferram Aerospace Research :: Change Log
 
+* 2015-1110: 0.15.5.2_Helmbold (ferram4) for KSP 1.0.5
+	+ Compatibility with KSP 1.0.5
+	+ Upgrade to MFI 1.1.2
+	+ Optimizations of runtime aerodynamic calculations
+	+ Cut background memory usage for voxels to ~60% of previous value
+	+ Increases in consistency of properties with similar voxel shapes
+	+ Full support for new stock hydrodynamic drag
+	+ Voxel model used in calculating radiative influx from celestial bodies
+	+ Reduction in first-load inconsistency in editor
+	+ More varied support for intake ducting setups, including support for stock Goliath engine
+	+ Tweaks to intake drag at low airbreather throttles
+	+ Editor GUI header cleanup
+	+ Dropdowns notated with down triangles for clarity
+	+ Added AoA Arrow to make AoAs for static analysis sweeps and stability deriv sims clearer
+	+ Fix for voxelization issues with degenerate triangles
+	+ Fix for voxelization issues with meshes with 0 triangles
+	+ Fix for B9 pWings not solidifying properly
+	+ Fix editor race condition in displaying sonic drag for vehicles
+	+ Fix for multiple vehicle aerodynamic NREs that could break aero
+	+ Fix for vehicle aerodynamics breaking under certain vessel-part configurations
+	+ Updated FAR Firehound MS, FAR SkyEye, FAR Montauk Shuttle to be more useful in KSP 1.0.5
 * 2015-0907: 0.15.5.1_Hayes (ferram4) for KSP 1.0.0
 	+ Upgrade to MM 2.6.8
 	+ Fix some legacy wing interaction issues
