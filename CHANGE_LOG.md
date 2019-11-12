@@ -1,5 +1,18 @@
 # Ferram Aerospace Research :: Change Log
 
+* 2017-0522: 0.15.8_deLaval (ferram4) for KSP 1.2.2
+	+ Compatibility for KSP 1.2.2 (finally)
+	+ Update to MFI 1.2.4
+	+ Update to MM 2.7.6
+	+ Lots of compatibility changes thanks to Alexander Abramov
+	+ Reduce memory use and garbage production in GUI thanks to soulsource and Virindi-AC
+	+ Fix GUI button multiplication
+	+ Fix stock drag arrows to be useful again
+	+ Fix voxelization errors with some intake parts
+	+ Fix FARAction group settings not saving
+	+ Fix landing gear main axis dtermination
+	+ Fix voxel errors with some stock parts
+	+ Made ignorable transforms for voxelization customizable via config
 * 2016-0701: 0.15.7.2_Lanchester (ferram4) for KSP 1.1.3
 	+ Fix a serious bug in v0.15.7 and v0.15.7.1 where chutes would not provide any drag
 * 2016-0701: 0.15.7.2_Lanchester (ferram4) for KSP 1.1.3
