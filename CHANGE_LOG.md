@@ -1,5 +1,18 @@
 # Ferram Aerospace Research :: Change Log
 
+* 2018-1023: 0.15.9.5_Lighthill (dkavolis) for KSP 1.5.1
+	+ [1.4.5 recompile](https://drive.google.com/drive/folders/1_xlZyOvcSAIqgLkbdCPJir_3cLVIsv6V?usp=sharing)
+	+ Update for KSP 1.5.1
+	+ Update to MM 3.1.0 for KSP 1.5.1
+	+ Update to MFI 1.2.5
+	+ Dealt with NullReferenceException when trying to access part colliders which do not have any (e.g. fuelLine)
+	+ Dealt with NullReferenceException when trying to determine if an engine has fairing which can be jettisoned by defaulting to no fairing
+	+ Added '[FAR]' tags to all log messages
+	+ Replaced farshaders.ksp with farassets.ksp which only contains a single material (source is in Assets)
+	+ Fixed curve colors in transonic design defaulting to purple
+	+ Moved asset bundle from shaders to Assets
+	+ Replaced icons with new ones (source is in icons, feel free to submit better ones)
+	+ Removed all All Rights Reserved files
 * 2018-0402: 0.15.9.1_Liepmann (ferram4) for KSP 1.3.1
 	+ Update for KSP 1.3.1 (though not strictly necessary)
 	+ Update to MM 3.0.4 for KSP 1.3.1
