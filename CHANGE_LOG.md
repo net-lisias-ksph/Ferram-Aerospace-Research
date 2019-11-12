@@ -6,6 +6,12 @@
 	+ Fix GUI window positions not loading on vessel spawn
 	+ Fix distribution of forces on parts; no change in total force and torque applied to vessel, just to which parts
 	+ Fix slightly negative drag on rearward-facing vehicles at high Knudsen numbers
+* 2016-0515: 0.15.6.4_Kleinhans (ferram4) for KSP 1.1.2
+	+ Fix a no-drag issue with asteroids
+	+ Fix a physics breaking issue with Tweakscaled wing parts, thanks pellinor
+	+ Fix GUI window positions not loading on vessel spawn
+	+ Fix distribution of forces on parts; no change in total force and torque applied to vessel, just to which parts
+	+ Fix slightly negative drag on rearward-facing vehicles at high Knudsen numbers
 * 2016-0430: 0.15.6.3_Kindelberger (ferram4) for KSP 1.1.2
 	+ Recompile for KSP 1.1.2 compatibility
 	+ Bundle ModuleManager 2.6.24 for 1.1.2 compatibility
