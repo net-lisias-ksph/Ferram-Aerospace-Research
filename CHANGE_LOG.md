@@ -1,5 +1,9 @@
 # Ferram Aerospace Research :: Change Log
 
+* 2015-0622: 0.15_3_1_Garabedian (ferram4) for KSP 1.0.0
+	+ Compatibility with KSP v1.0.3 and thermal changes
+	+ Fix one last error with voxelization breaking due to reverts
+	+ Add ability to make parts not count for main axis determination; fix structural panels interfering with proper main axis determination
 * 2015-0619: 0.15_3_Froude (ferram4) for KSP 1.0.0
 	+ Update to MM 2.6.5 for greater nyan nyan
 	+ Allow display of pressure coefficient (under assumption of axisymmetric flow) over the vehicle
