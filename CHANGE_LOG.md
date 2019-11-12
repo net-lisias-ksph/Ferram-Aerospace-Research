@@ -5,6 +5,11 @@
 	+ Fix Flight GUI button activated/not activated being backwards
 	+ Don't revoxelize for several B9 and AJE animation modules to reduce lag, thanks blowfish
 	+ Fix game crashing when a vessel landed in water is loaded
+* 2017-0604: 0.15.8.1_Lewis (ferram4) for KSP 1.2.2
+	+ Bugfix patch for KSP 1.2.2
+	+ Fix Flight GUI button activated/not activated being backwards
+	+ Don't revoxelize for several B9 and AJE animation modules to reduce lag, thanks blowfish
+	+ Fix game crashing when a vessel landed in water is loaded
 * 2017-0522: 0.15.8_de_Laval (ferram4) for KSP 1.2.2
 	+ Compatibility for KSP 1.2.2 (finally)
 	+ Update to MFI 1.2.4
