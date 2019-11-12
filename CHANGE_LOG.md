@@ -1,5 +1,7 @@
 # Ferram Aerospace Research :: Change Log
 
+* 2016-0701: 0.15.7.2_Lanchester (ferram4) for KSP 1.1.3
+	+ Fix a serious bug in v0.15.7 and v0.15.7.1 where chutes would not provide any drag
 * 2016-0630: 0.15.7.1_Kutta (ferram4) for KSP 1.1.3
 	+ Update to MFI 1.1.6 to fix an incompatibility with Kopernicus and the earlier version
 	+ Update CompatibilityChecker version
