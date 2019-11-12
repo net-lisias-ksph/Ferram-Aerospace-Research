@@ -1,5 +1,19 @@
 # Ferram Aerospace Research :: Change Log
 
+* 2015-0511: 0.15_Fanno (ferram4) for KSP 1.0.0
+	+ Fixed improper voxelization of debris and vehicles dropped from existing vessel, including effects on stock "occlusion" system
+	+ Fixed improper determination of vehicle main axis
+	+ Fixed Kerbal EVAs having no drag
+	+ Fixed exceptions where outirght disintegration could prevent some vehicles from having aerodynamics applied
+	+ Added upper cap on memory allocated for voxelization
+	+ Changed calculation of CoL to make more sense
+	+ Fixed error in determining AoA for nominal flight in Stability Derivative GUI
+	+ Hid yellow aero moment arrows by default in aero overlay to reduce user confusion
+	+ Fixed lift / drag arrows remaining on wings that become shielded when aero overlay is open
+	+ Switched to a cleaner method of setting internal speedometers
+	+ Disable control surfaces auto-response below 5 m/s to prevent wacky flailing during load / when stopped
+	+ Change compatibility settings to reject KSP 1.0.0, which is not compatible with RealChuteLite
+	+ Updated save-load method to save more reliably and not throw exceptions
 * 2015-0508: 0.15_Euler (ferram4) for KSP 1.0
 	+ Compatibility with KSP 1.0, 1.0.1, and 1.0.2
 	+ Upgraded to MM 2.6.3
