@@ -1,5 +1,13 @@
 # Ferram Aerospace Research :: Change Log
 
+* 2015-0907: 0.15.5.1_Hayes (ferram4) for KSP 1.0.0
+	+ Upgrade to MM 2.6.8
+	+ Fix some legacy wing interaction issues
+	+ Fix drag properties drifting slowly over multiple voxelization events due to numerical errors
+	+ Fix parts being occluded when main axis is in a strange orientation
+	+ Fix in-flight control surface tweaks not applying to symmetry counterparts
+	+ Fix KerbalEVAs working with Vanguard Parachutes
+	+ Fix for a critical error where detached boosters, weapons, debris, etc. would not have drag properties
 * 2015-0825: 0.15.5_Haack (ferram4) for KSP 1.0.0
 	+ Upgrade to MM 2.6.7
 	+ Fix for some RealChute issues by DaMichel
