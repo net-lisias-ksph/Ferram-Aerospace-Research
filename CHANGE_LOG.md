@@ -1,5 +1,10 @@
 # Ferram Aerospace Research :: Change Log
 
+* 2015-1202: 0.15.5.4_Hoerner (ferram4) for KSP 1.0.5
+	+ Adjust water drag for better splashdown performance
+	+ Fix a serious voxelization issue with ModuleJettison, most notable in leading to no-drag reentries
+	+ Fix an issue where 3rd-party voxelization updates could sometimes break the editor GUI and CoL
+	+ Fix a serious issue that could lead to spontaneous crashes on aero initialization (either VAB / SPH CoL, editor GUI, or going to flight)
 * 2015-1113: 0.15.5.3_vonHelmholtz (ferram4) for KSP 1.0.5
 	+ Upgrade to MM 2.6.13
 	+ RealChuteLite consistency with RealChute calcs and optimizations thanks to stupid_chris
