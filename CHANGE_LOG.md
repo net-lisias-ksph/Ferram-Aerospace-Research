@@ -1,5 +1,14 @@
 # Ferram Aerospace Research :: Change Log
 
+* 2016-0624: 0.15.7_Kuchemann (ferram4) for KSP 1.1.3
+	+ Update to ModuleManager 2.6.25
+	+ Update for KSP 1.1.3 compatibility
+	+ Implement higher resolution sub-voxel voxelization method
+	+ Allow switching between high and low res sub-voxel methods
+	+ Optimize voxel shell generation, particularly for high triangle count meshes
+	+ Increase the resistance to sideways aerostructural failures for many fuselage and rocket parts
+	+ Fix voxelization error that would lead to transparent mesh objects being voxelized
+	+ Fix voxelization errors that could lead to incomplete voxelization of some stock procedural fairing shapes
 * 2016-0624: 0.15.7_Küchemann (ferram4) for KSP 1.1.3
 	+ Update to ModuleManager 2.6.25
 	+ Update for KSP 1.1.3 compatibility
