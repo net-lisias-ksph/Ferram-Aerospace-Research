@@ -1,5 +1,25 @@
 # Ferram Aerospace Research :: Change Log
 
+* 2019-0410: 0.15.10.0_Lundgren (dkavolis) for KSP 1.7
+	+ Note for Kopernicus users: DO NOT overwrite MFI that comes with Kopernicus since it is locked to that particular version
+	+ Recompiled for KSP 1.7
+	+ Fix principal axes in simulation and other bugfixes ([#23](https://github.com/dkavolis/Ferram-Aerospace-Research/pull/23), [@Rodhern](https://github.com/Rodhern))
+	+ Fix voxelization of most stock engines ([#39](https://github.com/dkavolis/Ferram-Aerospace-Research/pull/39))
+	+ Voxelization correctly handles jettison transforms with part variants ([#39](https://github.com/dkavolis/Ferram-Aerospace-Research/pull/39))
+	+ Fix voxelization of `InflatableHeatShield` ([#39](https://github.com/dkavolis/Ferram-Aerospace-Research/pull/39))
+	+ Fixed voxelization of simple heat shields ([#37](https://github.com/dkavolis/Ferram-Aerospace-Research/pull/37))
+	+ Added additional nodes to `GeometryPartModule` ([#37](https://github.com/dkavolis/Ferram-Aerospace-Research/pull/37), [#39](https://github.com/dkavolis/Ferram-Aerospace-Research/pull/39), see PRs for more details). The new nodes should allow parts to be voxelized much closer to what is visible and handle animations better:
+			- `ignoreTransform` (string)
+			- `ignoreIfNoRenderer` (bool)
+			- `unignoreTransform` (string)
+			- `rebuildOnAnimation` (bool)
+	+ NRE fixes ([#36](https://github.com/dkavolis/Ferram-Aerospace-Research/pull/36)):
+			- Trying to display debug voxels with no parts in the editor
+			- Occasional  NRE when voxelizing vehicle (due to race conditions?)
+			- When force closing the game from the editor with debug voxels displayed
+	+ Voxelization respects part variant changes in the editor ([#35](https://github.com/dkavolis/Ferram-Aerospace-Research/pull/35))
+	+ Expose IAS and EAS used by FAR in FARAPI ([#34](https://github.com/dkavolis/Ferram-Aerospace-Research/pull/34))
+	+ Enable/disable FAR speed display on the navball from FARAPI ([#33](https://github.com/dkavolis/Ferram-Aerospace-Research/pull/33))
 * 2019-0312: 0.15.9.7_Lumley (dkavolis) for KSP 1.6
 	+ Note for Kopernicus users: DO NOT overwrite MFI that comes with Kopernicus since it is locked to that particular version
 	+ Update to MM 4.0.2
