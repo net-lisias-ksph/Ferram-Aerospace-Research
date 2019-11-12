@@ -1,5 +1,17 @@
 # Ferram Aerospace Research :: Change Log
 
+* 2019-0620: 0.15.11.0_Mach (dkavolis) for KSP 1.7
+	+ Chute staging now works with stage lock (#68)
+	+ Fix German localization formatting (#70, @HebaruSan)
+	+ Greatly improve stable angle of attack solver in stability derivative calculation, now works for all cases where stable angle of attack exists and converges faster (#65)
+	+ Fix aerodynamic torque simulation and expose total aerodynamic force and torque through API (#22, @BenChung)
+	+ Shaders are now platform specific (#60)
+	+ Now really fixed ocassional NRE when cleaning up debug voxels (#59)
+	+ Fix unsubsribing correct method from GameEvents.onGUIEngineersReportDestroy in EditorGUI (#58)
+	+ Fix assymetrical voxelization on some Mk2/Mk3 adapters #56 (#57)
+	+ Cache some Unity properties for performance reasons (#53)
+	+ Fix Runge Kutta method in transient simulation (#50)
+	+ Fix part tinting not cleared after last tint option is disabled (#49)
 * 2019-0417: 0.15.10.1_Lundgren (dkavolis) for KSP 1.7
 	+ Hotfix for 0.15.10.0
 			- Note for Kopernicus users: DO NOT overwrite MFI that comes with Kopernicus since it is locked to that particular version
