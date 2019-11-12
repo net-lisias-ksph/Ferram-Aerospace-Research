@@ -24,3 +24,12 @@ Licensed under the [GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html).
 * [dkavolis](https://forum.kerbalspaceprogram.com/index.php?/profile/192697-dkavolis/) - Continued
 	+ [Forum](https://forum.kerbalspaceprogram.com/index.php?/topic/179445-*)
 	+ [GitHub](https://github.com/dkavolis/Ferram-Aerospace-Research)
+* Forks of interest:
+	+ https://github.com/Boris-Barboris/Ferram-Aerospace-Research/
+	+ https://github.com/alexanderabramov/Ferram-Aerospace-Research/
+	+ https://github.com/terorie/Ferram-Aerospace-Research/
+	+ https://github.com/fat-lobyte/Ferram-Aerospace-Research/
+	+ https://github.com/Oxalicc/Ferram-Aerospace-Research/
+	+ https://github.com/BenChung/Ferram-Aerospace-Research/
+	+ https://github.com/EwoutH/Ferram-Aerospace-Research/
+	+ https://github.com/Rodhern/Ferram-Aerospace-Research/
