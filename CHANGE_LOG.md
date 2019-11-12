@@ -1,5 +1,9 @@
 # Ferram Aerospace Research :: Change Log
 
+* 2019-1024: 0.15.11.2_Mach (dkavolis) for KSP 1.7
+	+ Update to MM 4.0.3
+	+ Revert NaN stability derivatives if no stable AoA is found [#75](https://github.com/dkavolis/Ferram-Aerospace-Research/issues/75) ([#81](https://github.com/dkavolis/Ferram-Aerospace-Research/pull/81))
+	+ Fix [#74](https://github.com/dkavolis/Ferram-Aerospace-Research/issues/74) ([#76](https://github.com/dkavolis/Ferram-Aerospace-Research/pull/76), [@parachutingturtle](https://github.com/dkavolis/Ferram-Aerospace-Research/issues?q=is%3Apr+author%3Aparachutingturtle))
 * 2019-0623: 0.15.11.1_Mach (dkavolis) for KSP 1.7
 	+ Fix #72 (#73)
 * 2019-0620: 0.15.11.0_Mach (dkavolis) for KSP 1.7
