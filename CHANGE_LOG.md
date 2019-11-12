@@ -1,5 +1,12 @@
 # Ferram Aerospace Research :: Change Log
 
+* 2017-0822: 0.15.9_Liebe (ferram4) for KSP 1.3.0
+	+ Update for KSP 1.3
+	+ Update to MM 2.8.1
+	+ Include support for localization
+	+ Include German (by terorie), Russian (by pand5461), and Chinese (by Nigh) translations
+	+ Fix NaN errors with Trajectories
+	+ Fix some issues with identifying KSPWheel Adjustable Landing Gear as gear
 * 2017-0604: 0.15.8.1_Lewis (ferram4) for KSP 1.2.2
 	+ Bugfix patch for KSP 1.2.2
 	+ Fix Flight GUI button activated/not activated being backwards
