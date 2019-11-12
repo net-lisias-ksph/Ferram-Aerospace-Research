@@ -4,6 +4,10 @@
 	+ Tweak pitch and roll damping of fuselages to make more logical sense; excessive roll damping at high dynamic pressures for wingless vehicles has been fixed
 	+ Change units for specific excess power in the Flight Data readout to be W/kg on the basis that it makes more logical sense than m^2/s^3
 	+ Fix a critical error that prevented voxelizations of Kerbals or any vehicles that had Kerbals riding in a command seat
+* 2016-0218: 0.15.5.7_Johnson (ferram4) for KSP 1.0.5
+	+ Tweak pitch and roll damping of fuselages to make more logical sense; excessive roll damping at high dynamic pressures for wingless vehicles has been fixed
+	+ Change units for specific excess power in the Flight Data readout to be W/kg on the basis that it makes more logical sense than m^2/s^3
+	+ Fix a critical error that prevented voxelizations of Kerbals or any vehicles that had Kerbals riding in a command seat
 * 2016-0208: 0.15.5.6_Jacobs (ferram4) for KSP 1.0.5
 	+ Update to MM 2.6.18
 	+ Fix more negative sonic drag issues
