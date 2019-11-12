@@ -1,5 +1,10 @@
 # Ferram Aerospace Research :: Change Log
 
+* 2019-0417: 0.15.10.1_Lundgren (dkavolis) for KSP 1.7
+	+ Hotfix for 0.15.10.0
+			- Note for Kopernicus users: DO NOT overwrite MFI that comes with Kopernicus since it is locked to that particular version
+	+ Fix config values reset on load in `GeometryPartModule` [#47](https://github.com/dkavolis/Ferram-Aerospace-Research/pull/47)
+	+ Fix NRE spam on EVA [#43](https://github.com/dkavolis/Ferram-Aerospace-Research/issues/43) ([#44](https://github.com/dkavolis/Ferram-Aerospace-Research/pull/44))
 * 2019-0410: 0.15.10.0_Lundgren (dkavolis) for KSP 1.7
 	+ Note for Kopernicus users: DO NOT overwrite MFI that comes with Kopernicus since it is locked to that particular version
 	+ Recompiled for KSP 1.7
