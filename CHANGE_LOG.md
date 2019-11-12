@@ -1,5 +1,14 @@
 # Ferram Aerospace Research :: Change Log
 
+* 2016-0420: 0.15.6_Jones (ferram4) for KSP 1.1
+	+ Update to KSP 1.1
+	+ Update to bundle ModuleManager 2.6.22
+	+ Update to bundle ModularFlightIntegrator 1.1.3
+	+ Updates to RealChuteLite, thanks to stupid_chris
+	+ Compatibility changes for use of KSP debuggers, thanks to neouy
+	+ Increase aerodynamic damping for fuselages to somewhat more realistic levels
+	+ Fix a serious issue that disabled the majority of conduction between parts
+	+ Disable win64 locking
 * 2016-0218: 0.15.5.7_Johnson (ferram4) for KSP 1.0.5
 	+ Tweak pitch and roll damping of fuselages to make more logical sense; excessive roll damping at high dynamic pressures for wingless vehicles has been fixed
 	+ Change units for specific excess power in the Flight Data readout to be W/kg on the basis that it makes more logical sense than m^2/s^3
