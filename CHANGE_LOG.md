@@ -4,6 +4,10 @@
 	+ Recompile for KSP 1.1.2 compatibility
 	+ Bundle ModuleManager 2.6.24 for 1.1.2 compatibility
 	+ Fix a critical error that would cause KerbalEVAs to have no aerodynamic forces applied to them
+* 2016-0430: 0.15.6.3_Kindelberger (ferram4) for KSP 1.1.2
+	+ Recompile for KSP 1.1.2 compatibility
+	+ Bundle ModuleManager 2.6.24 for 1.1.2 compatibility
+	+ Fix a critical error that would cause KerbalEVAs to have no aerodynamic forces applied to them
 * 2016-0429: 0.15.6.2_Kartveli (ferram4) for KSP 1.1.1
 	+ Ensure KSP 1.1.1 compatibility
 	+ Upgrade to ModuleManager 2.6.23
