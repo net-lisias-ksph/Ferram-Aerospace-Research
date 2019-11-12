@@ -1,5 +1,13 @@
 # Ferram Aerospace Research :: Change Log
 
+* 2015-0729: 0.15.4.1_Goldstein (ferram4) for KSP 1.0.0
+	+ Re-implementation of aero viz coloration, thanks to mjn33
+	+ Reduction in garbage produced by voxelization, prep for further garbage reductions
+	+ Fixed NaN issue with KAX electric props
+	+ Fixed drag-breaking NRE during rapid disintegrations
+	+ Fixed some issues with Blizzy Toolbar icons
+	+ Fixed exacerbation of stock heating bug
+	+ Fixed control surfaces not updating direction during staging-related CoM shifts
 * 2015-0712: 0.15.4_Glauert (ferram4) for KSP 1.0.0
 	+ Update to MM 2.6.6
 	+ Update to MFI 1.1.1, fixes gimbaling bug below 750 m/s on short vehicles
