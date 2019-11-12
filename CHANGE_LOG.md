@@ -1,5 +1,9 @@
 # Ferram Aerospace Research :: Change Log
 
+* 2016-0423: 0.15.6.1_von_Karman (ferram4) for KSP 1.1
+	+ Fix a critical CPU usage bug that resulted in voxelization threads SpinWaiting forever, monopolizing the processor
+	+ Fix parachutes without RealChute configs not applying forces when FAR + RC are installed, thanks to stupid_chris
+	+ Fix ModuleManager database reload function hanging halfway through, breaking the game, thanks to stupid_chris
 * 2016-0420: 0.15.6_Jones (ferram4) for KSP 1.1
 	+ Update to KSP 1.1
 	+ Update to bundle ModuleManager 2.6.22
