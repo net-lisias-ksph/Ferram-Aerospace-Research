@@ -1,5 +1,15 @@
 # Ferram Aerospace Research :: Change Log
 
+* 2016-0203: 0.15.5.5_Hugoniot (ferram4) for KSP 1.0.5
+	+ Fix an inconsistency in calculations of sonic drag
+	+ Fix possibility of sonic drag resulting in negative drag coefficients on very blunt shapes
+	+ Generally increase sonic drag of blunt objects, generally decrease drag of slender objects
+	+ Fix water drag failing to function under complete submersion
+	+ Fix rare error where Procedural Fairings will not properly voxelize
+	+ Fix GetCurrentDensity method (for external mods) to return result consistent with simulation
+	+ Fix overheat interaction on load with ModuleCoreHeat
+	+ Fix FAR breaking on attempts to load Training or Scenario scenes
+	+ Fix spoilers and flaps not updating with settings in the editor
 * 2015-1202: 0.15.5.4_Hoerner (ferram4) for KSP 1.0.5
 	+ Adjust water drag for better splashdown performance
 	+ Fix a serious voxelization issue with ModuleJettison, most notable in leading to no-drag reentries
