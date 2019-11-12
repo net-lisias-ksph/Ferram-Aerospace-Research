@@ -1,5 +1,17 @@
 # Ferram Aerospace Research :: Change Log
 
+* 2018-1224: 0.15.9.6_Lin (dkavolis) for KSP 1.6
+	+ Note for Kopernicus users: DO NOT overwrite MFI that comes with Kopernicus since it is locked to that particular version
+	+ Update for KSP 1.6
+	+ Update to MM 3.1.2
+	+ Update to MFI 1.2.6
+	+ Mainly a release for RO
+	+ Trying out enabling FAR for KSP 1.4-1.6
+	+ Much nicer looking anti-aliased line plots
+	+ Fix NRE when Trajectories tried to access simulation before the vessel was initialized
+	+ Changed icon to "FARc" to avoid confusion with the original FAR
+	+ Fix MM pass in a config that is only used on first start of FAR
+	+ Fix NRE when trying to save stability augmentation settings on closing KSP
 * 2018-1023: 0.15.9.5_Lighthill (dkavolis) for KSP 1.5.1
 	+ [1.4.5 recompile](https://drive.google.com/drive/folders/1_xlZyOvcSAIqgLkbdCPJir_3cLVIsv6V?usp=sharing)
 	+ Update for KSP 1.5.1
