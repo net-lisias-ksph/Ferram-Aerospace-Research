@@ -1,5 +1,19 @@
 # Ferram Aerospace Research :: Change Log
 
+* 2015-0619: 0.15_3_Froude (ferram4) for KSP 1.0.0
+	+ Update to MM 2.6.5 for greater nyan nyan
+	+ Allow display of pressure coefficient (under assumption of axisymmetric flow) over the vehicle
+	+ Tweak subsonic drag to be lower for slender shapes
+	+ Fixed voxelization breaking due to combined memory leak + hard memory limit for voxelization after many editor -> flight cycles
+	+ Fixed some race conditions in voxelization that could break aero properties
+	+ Fixed deadlock in threadpool if many voxelization events triggered simultaneously
+	+ Fixed possibility of deadlock if voxelization settings were updated
+	+ Fixed voxelization errors for some cargo bays and other parts
+	+ Fixed voxelization errors for pWings; includes support for any parts making use of mirrorAxis
+	+ Fixed some longstanding wing interaction issues, including permanent stalled wings
+	+ Fixed a newer issue with wing shielding on symmetry counterparts
+	+ Some main axis determination improvements
+	+ Fixed an where certain user atmospheric settings would not take
 * 2015-0520: 0.15_2_Ferri (ferram4) for KSP 1.0.0
 	+ Improved voxelization accuracy
 	+ Changed CoL code again to try and make it more useful
