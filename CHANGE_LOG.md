@@ -1,5 +1,12 @@
 # Ferram Aerospace Research :: Change Log
 
+* 2016-0429: 0.15.6.2_Kartveli (ferram4) for KSP 1.1.1
+	+ Ensure KSP 1.1.1 compatibility
+	+ Upgrade to ModuleManager 2.6.23
+	+ Fix new landing gear interfering with main axis determination
+	+ Fix RealChute / RealChuteLite interaction breaking stock chute behavior, thanks to stupid_chris
+	+ Fix mass-calc error for wing-mass-strength that resulted in all planes gaining unhealthy amounts of weight
+	+ Attempt to make debug-compatibility actually work, thanks to NathanKell
 * 2016-0423: 0.15.6.1_von_Karman (ferram4) for KSP 1.1
 	+ Fix a critical CPU usage bug that resulted in voxelization threads SpinWaiting forever, monopolizing the processor
 	+ Fix parachutes without RealChute configs not applying forces when FAR + RC are installed, thanks to stupid_chris
