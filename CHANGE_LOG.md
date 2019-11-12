@@ -1,5 +1,14 @@
 # Ferram Aerospace Research :: Change Log
 
+* 2018-0402: 0.15.9.1_Liepmann (ferram4) for KSP 1.3.1
+	+ Update for KSP 1.3.1 (though not strictly necessary)
+	+ Update to MM 3.0.4 for KSP 1.3.1
+	+ Added ability to override structural stress values for aerodynamic failures on a per-part basis
+	+ Switch to applying forces through part.AddForce rather than rb.AddForce to allow Principia to handle gravity within atmospheres
+	+ Added functions to KSPAPI to check the status of any vessel's voxelization
+	+ Fix issues with all RealChuteLite chutes having the same exact drag properties
+	+ Fix RealChuteLite GUI not displaying any information
+	+ Remove unnecessary stock lifting body effects on pods
 * 2017-0822: 0.15.9_Liebe (ferram4) for KSP 1.3.0
 	+ Update for KSP 1.3
 	+ Update to MM 2.8.1
